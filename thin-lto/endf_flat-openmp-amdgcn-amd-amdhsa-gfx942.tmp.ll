@@ -1,0 +1,1740 @@
+; ModuleID = 'endf_flat-openmp-amdgcn-amd-amdhsa-gfx942.tmp.bc'
+source_filename = "/g/g0/wright117/workspace/openmc/openmc-omp/openmc/src/endf_flat.cpp"
+target datalayout = "e-p:64:64-p1:64:64-p2:32:32-p3:32:32-p4:64:64-p5:32:32-p6:32:32-p7:160:256:256:32-p8:128:128-p9:192:256:256:32-i64:64-v16:16-v24:32-v32:32-v48:64-v96:128-v192:256-v256:256-v512:512-v1024:1024-v2048:2048-n32:64-S32-A5-G1-ni:7:8:9"
+target triple = "amdgcn-amd-amdhsa"
+
+%"struct.std::array" = type { [6 x i32] }
+%"class.openmc::Tabulated1DFlat" = type { ptr, i64, i64 }
+%"class.openmc::PolynomialFlat" = type { ptr }
+%"class.openmc::CoherentElasticXSFlat" = type { ptr }
+%"class.openmc::IncoherentElasticXSFlat" = type { ptr }
+%"class.openmc::Function1DFlat" = type { ptr }
+%"class.openmc::Function1DFlatContainer" = type { %"class.openmc::DataBuffer" }
+%"class.openmc::DataBuffer" = type <{ ptr, i64, i64, i32, [4 x i8] }>
+
+$_ZN6openmc14PolynomialFlatC2EPKh = comdat any
+
+$_ZN6openmc21CoherentElasticXSFlatC2EPKh = comdat any
+
+$_ZN6openmc23IncoherentElasticXSFlatC2EPKh = comdat any
+
+$_ZNK6openmc23Function1DFlatContainer4funcEv = comdat any
+
+$_ZN6openmc14Function1DFlatC2EPKh = comdat any
+
+@__omp_rtl_debug_kind = weak_odr hidden addrspace(1) constant i32 0
+@__omp_rtl_assume_teams_oversubscription = weak_odr hidden addrspace(1) constant i32 0
+@__omp_rtl_assume_threads_oversubscription = weak_odr hidden addrspace(1) constant i32 0
+@__omp_rtl_assume_no_thread_state = weak_odr hidden addrspace(1) constant i32 0
+@__omp_rtl_assume_no_nested_parallelism = weak_odr hidden addrspace(1) constant i32 0
+@dagmc = external addrspace(1) global i8, align 1
+@run_CE = external addrspace(1) global i8, align 1
+@max_lost_particles = external addrspace(1) global i32, align 4
+@gen_per_batch = external addrspace(1) global i32, align 4
+@n_particles = external addrspace(1) global i64, align 8
+@_ZN6openmcL12DEPLETION_RXE = internal addrspace(1) constant %"struct.std::array" { [6 x i32] [i32 102, i32 103, i32 107, i32 16, i32 17, i32 37] }, align 4
+@"__ZN6openmcL12DEPLETION_RXE$ref" = internal constant ptr addrspace(1) @_ZN6openmcL12DEPLETION_RXE, align 8
+@llvm.compiler.used = appending addrspace(1) global [1 x ptr] [ptr @"__ZN6openmcL12DEPLETION_RXE$ref"], section "llvm.metadata"
+@__oclc_finite_only_opt = internal local_unnamed_addr addrspace(4) constant i8 0, align 1
+
+; Function Attrs: cold convergent mustprogress noinline nounwind optsize
+define weak hidden { double, double } @__muldc3(double noundef %__a, double noundef %__b, double noundef %__c, double noundef %__d) #0 {
+entry:
+  %retval = alloca { double, double }, align 8, addrspace(5)
+  %__a.addr = alloca double, align 8, addrspace(5)
+  %__b.addr = alloca double, align 8, addrspace(5)
+  %__c.addr = alloca double, align 8, addrspace(5)
+  %__d.addr = alloca double, align 8, addrspace(5)
+  %__ac = alloca double, align 8, addrspace(5)
+  %__bd = alloca double, align 8, addrspace(5)
+  %__ad = alloca double, align 8, addrspace(5)
+  %__bc = alloca double, align 8, addrspace(5)
+  %z = alloca { double, double }, align 8, addrspace(5)
+  %__recalc = alloca i32, align 4, addrspace(5)
+  %cleanup.dest.slot = alloca i32, align 4, addrspace(5)
+  %retval.ascast = addrspacecast ptr addrspace(5) %retval to ptr
+  %__a.addr.ascast = addrspacecast ptr addrspace(5) %__a.addr to ptr
+  %__b.addr.ascast = addrspacecast ptr addrspace(5) %__b.addr to ptr
+  %__c.addr.ascast = addrspacecast ptr addrspace(5) %__c.addr to ptr
+  %__d.addr.ascast = addrspacecast ptr addrspace(5) %__d.addr to ptr
+  %__ac.ascast = addrspacecast ptr addrspace(5) %__ac to ptr
+  %__bd.ascast = addrspacecast ptr addrspace(5) %__bd to ptr
+  %__ad.ascast = addrspacecast ptr addrspace(5) %__ad to ptr
+  %__bc.ascast = addrspacecast ptr addrspace(5) %__bc to ptr
+  %z.ascast = addrspacecast ptr addrspace(5) %z to ptr
+  %__recalc.ascast = addrspacecast ptr addrspace(5) %__recalc to ptr
+  store double %__a, ptr %__a.addr.ascast, align 8, !tbaa !14
+  store double %__b, ptr %__b.addr.ascast, align 8, !tbaa !14
+  store double %__c, ptr %__c.addr.ascast, align 8, !tbaa !14
+  store double %__d, ptr %__d.addr.ascast, align 8, !tbaa !14
+  call void @llvm.lifetime.start.p5(i64 8, ptr addrspace(5) %__ac) #7
+  %0 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %1 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %mul = fmul double %0, %1
+  store double %mul, ptr %__ac.ascast, align 8, !tbaa !14
+  call void @llvm.lifetime.start.p5(i64 8, ptr addrspace(5) %__bd) #7
+  %2 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %3 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %mul1 = fmul double %2, %3
+  store double %mul1, ptr %__bd.ascast, align 8, !tbaa !14
+  call void @llvm.lifetime.start.p5(i64 8, ptr addrspace(5) %__ad) #7
+  %4 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %5 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %mul2 = fmul double %4, %5
+  store double %mul2, ptr %__ad.ascast, align 8, !tbaa !14
+  call void @llvm.lifetime.start.p5(i64 8, ptr addrspace(5) %__bc) #7
+  %6 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %7 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %mul3 = fmul double %6, %7
+  store double %mul3, ptr %__bc.ascast, align 8, !tbaa !14
+  call void @llvm.lifetime.start.p5(i64 16, ptr addrspace(5) %z) #7
+  %8 = load double, ptr %__ac.ascast, align 8, !tbaa !14
+  %9 = load double, ptr %__bd.ascast, align 8, !tbaa !14
+  %sub = fsub double %8, %9
+  %z.ascast.realp = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 0
+  store double %sub, ptr %z.ascast.realp, align 8, !tbaa !14
+  %10 = load double, ptr %__ad.ascast, align 8, !tbaa !14
+  %11 = load double, ptr %__bc.ascast, align 8, !tbaa !14
+  %add = fadd double %10, %11
+  %z.ascast.imagp = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 1
+  store double %add, ptr %z.ascast.imagp, align 8, !tbaa !14
+  %z.ascast.realp4 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 0
+  %12 = load double, ptr %z.ascast.realp4, align 8, !tbaa !14
+  %call = call i32 @__ocml_isnan_f64(double noundef %12) #8
+  %tobool = icmp ne i32 %call, 0
+  br i1 %tobool, label %land.lhs.true, label %if.end104
+
+land.lhs.true:                                    ; preds = %entry
+  %z.ascast.imagp5 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 1
+  %13 = load double, ptr %z.ascast.imagp5, align 8, !tbaa !14
+  %call6 = call i32 @__ocml_isnan_f64(double noundef %13) #8
+  %tobool7 = icmp ne i32 %call6, 0
+  br i1 %tobool7, label %if.then, label %if.end104
+
+if.then:                                          ; preds = %land.lhs.true
+  call void @llvm.lifetime.start.p5(i64 4, ptr addrspace(5) %__recalc) #7
+  store i32 0, ptr %__recalc.ascast, align 4, !tbaa !18
+  %14 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %call8 = call i32 @__ocml_isinf_f64(double noundef %14) #8
+  %tobool9 = icmp ne i32 %call8, 0
+  br i1 %tobool9, label %if.then12, label %lor.lhs.false
+
+lor.lhs.false:                                    ; preds = %if.then
+  %15 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %call10 = call i32 @__ocml_isinf_f64(double noundef %15) #8
+  %tobool11 = icmp ne i32 %call10, 0
+  br i1 %tobool11, label %if.then12, label %if.end30
+
+if.then12:                                        ; preds = %lor.lhs.false, %if.then
+  %16 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %call13 = call i32 @__ocml_isinf_f64(double noundef %16) #8
+  %tobool14 = icmp ne i32 %call13, 0
+  %17 = zext i1 %tobool14 to i64
+  %cond = select i1 %tobool14, i32 1, i32 0
+  %conv = sitofp i32 %cond to double
+  %18 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %call15 = call double @__ocml_copysign_f64(double noundef %conv, double noundef %18) #8
+  store double %call15, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %19 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %call16 = call i32 @__ocml_isinf_f64(double noundef %19) #8
+  %tobool17 = icmp ne i32 %call16, 0
+  %20 = zext i1 %tobool17 to i64
+  %cond18 = select i1 %tobool17, i32 1, i32 0
+  %conv19 = sitofp i32 %cond18 to double
+  %21 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %call20 = call double @__ocml_copysign_f64(double noundef %conv19, double noundef %21) #8
+  store double %call20, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %22 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call21 = call i32 @__ocml_isnan_f64(double noundef %22) #8
+  %tobool22 = icmp ne i32 %call21, 0
+  br i1 %tobool22, label %if.then23, label %if.end
+
+if.then23:                                        ; preds = %if.then12
+  %23 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call24 = call double @__ocml_copysign_f64(double noundef 0.000000e+00, double noundef %23) #8
+  store double %call24, ptr %__c.addr.ascast, align 8, !tbaa !14
+  br label %if.end
+
+if.end:                                           ; preds = %if.then23, %if.then12
+  %24 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %call25 = call i32 @__ocml_isnan_f64(double noundef %24) #8
+  %tobool26 = icmp ne i32 %call25, 0
+  br i1 %tobool26, label %if.then27, label %if.end29
+
+if.then27:                                        ; preds = %if.end
+  %25 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %call28 = call double @__ocml_copysign_f64(double noundef 0.000000e+00, double noundef %25) #8
+  store double %call28, ptr %__d.addr.ascast, align 8, !tbaa !14
+  br label %if.end29
+
+if.end29:                                         ; preds = %if.then27, %if.end
+  store i32 1, ptr %__recalc.ascast, align 4, !tbaa !18
+  br label %if.end30
+
+if.end30:                                         ; preds = %if.end29, %lor.lhs.false
+  %26 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call31 = call i32 @__ocml_isinf_f64(double noundef %26) #8
+  %tobool32 = icmp ne i32 %call31, 0
+  br i1 %tobool32, label %if.then36, label %lor.lhs.false33
+
+lor.lhs.false33:                                  ; preds = %if.end30
+  %27 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %call34 = call i32 @__ocml_isinf_f64(double noundef %27) #8
+  %tobool35 = icmp ne i32 %call34, 0
+  br i1 %tobool35, label %if.then36, label %if.end57
+
+if.then36:                                        ; preds = %lor.lhs.false33, %if.end30
+  %28 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call37 = call i32 @__ocml_isinf_f64(double noundef %28) #8
+  %tobool38 = icmp ne i32 %call37, 0
+  %29 = zext i1 %tobool38 to i64
+  %cond39 = select i1 %tobool38, i32 1, i32 0
+  %conv40 = sitofp i32 %cond39 to double
+  %30 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call41 = call double @__ocml_copysign_f64(double noundef %conv40, double noundef %30) #8
+  store double %call41, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %31 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %call42 = call i32 @__ocml_isinf_f64(double noundef %31) #8
+  %tobool43 = icmp ne i32 %call42, 0
+  %32 = zext i1 %tobool43 to i64
+  %cond44 = select i1 %tobool43, i32 1, i32 0
+  %conv45 = sitofp i32 %cond44 to double
+  %33 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %call46 = call double @__ocml_copysign_f64(double noundef %conv45, double noundef %33) #8
+  store double %call46, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %34 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %call47 = call i32 @__ocml_isnan_f64(double noundef %34) #8
+  %tobool48 = icmp ne i32 %call47, 0
+  br i1 %tobool48, label %if.then49, label %if.end51
+
+if.then49:                                        ; preds = %if.then36
+  %35 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %call50 = call double @__ocml_copysign_f64(double noundef 0.000000e+00, double noundef %35) #8
+  store double %call50, ptr %__a.addr.ascast, align 8, !tbaa !14
+  br label %if.end51
+
+if.end51:                                         ; preds = %if.then49, %if.then36
+  %36 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %call52 = call i32 @__ocml_isnan_f64(double noundef %36) #8
+  %tobool53 = icmp ne i32 %call52, 0
+  br i1 %tobool53, label %if.then54, label %if.end56
+
+if.then54:                                        ; preds = %if.end51
+  %37 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %call55 = call double @__ocml_copysign_f64(double noundef 0.000000e+00, double noundef %37) #8
+  store double %call55, ptr %__b.addr.ascast, align 8, !tbaa !14
+  br label %if.end56
+
+if.end56:                                         ; preds = %if.then54, %if.end51
+  store i32 1, ptr %__recalc.ascast, align 4, !tbaa !18
+  br label %if.end57
+
+if.end57:                                         ; preds = %if.end56, %lor.lhs.false33
+  %38 = load i32, ptr %__recalc.ascast, align 4, !tbaa !18
+  %tobool58 = icmp ne i32 %38, 0
+  br i1 %tobool58, label %if.end92, label %land.lhs.true59
+
+land.lhs.true59:                                  ; preds = %if.end57
+  %39 = load double, ptr %__ac.ascast, align 8, !tbaa !14
+  %call60 = call i32 @__ocml_isinf_f64(double noundef %39) #8
+  %tobool61 = icmp ne i32 %call60, 0
+  br i1 %tobool61, label %if.then71, label %lor.lhs.false62
+
+lor.lhs.false62:                                  ; preds = %land.lhs.true59
+  %40 = load double, ptr %__bd.ascast, align 8, !tbaa !14
+  %call63 = call i32 @__ocml_isinf_f64(double noundef %40) #8
+  %tobool64 = icmp ne i32 %call63, 0
+  br i1 %tobool64, label %if.then71, label %lor.lhs.false65
+
+lor.lhs.false65:                                  ; preds = %lor.lhs.false62
+  %41 = load double, ptr %__ad.ascast, align 8, !tbaa !14
+  %call66 = call i32 @__ocml_isinf_f64(double noundef %41) #8
+  %tobool67 = icmp ne i32 %call66, 0
+  br i1 %tobool67, label %if.then71, label %lor.lhs.false68
+
+lor.lhs.false68:                                  ; preds = %lor.lhs.false65
+  %42 = load double, ptr %__bc.ascast, align 8, !tbaa !14
+  %call69 = call i32 @__ocml_isinf_f64(double noundef %42) #8
+  %tobool70 = icmp ne i32 %call69, 0
+  br i1 %tobool70, label %if.then71, label %if.end92
+
+if.then71:                                        ; preds = %lor.lhs.false68, %lor.lhs.false65, %lor.lhs.false62, %land.lhs.true59
+  %43 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %call72 = call i32 @__ocml_isnan_f64(double noundef %43) #8
+  %tobool73 = icmp ne i32 %call72, 0
+  br i1 %tobool73, label %if.then74, label %if.end76
+
+if.then74:                                        ; preds = %if.then71
+  %44 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %call75 = call double @__ocml_copysign_f64(double noundef 0.000000e+00, double noundef %44) #8
+  store double %call75, ptr %__a.addr.ascast, align 8, !tbaa !14
+  br label %if.end76
+
+if.end76:                                         ; preds = %if.then74, %if.then71
+  %45 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %call77 = call i32 @__ocml_isnan_f64(double noundef %45) #8
+  %tobool78 = icmp ne i32 %call77, 0
+  br i1 %tobool78, label %if.then79, label %if.end81
+
+if.then79:                                        ; preds = %if.end76
+  %46 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %call80 = call double @__ocml_copysign_f64(double noundef 0.000000e+00, double noundef %46) #8
+  store double %call80, ptr %__b.addr.ascast, align 8, !tbaa !14
+  br label %if.end81
+
+if.end81:                                         ; preds = %if.then79, %if.end76
+  %47 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call82 = call i32 @__ocml_isnan_f64(double noundef %47) #8
+  %tobool83 = icmp ne i32 %call82, 0
+  br i1 %tobool83, label %if.then84, label %if.end86
+
+if.then84:                                        ; preds = %if.end81
+  %48 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call85 = call double @__ocml_copysign_f64(double noundef 0.000000e+00, double noundef %48) #8
+  store double %call85, ptr %__c.addr.ascast, align 8, !tbaa !14
+  br label %if.end86
+
+if.end86:                                         ; preds = %if.then84, %if.end81
+  %49 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %call87 = call i32 @__ocml_isnan_f64(double noundef %49) #8
+  %tobool88 = icmp ne i32 %call87, 0
+  br i1 %tobool88, label %if.then89, label %if.end91
+
+if.then89:                                        ; preds = %if.end86
+  %50 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %call90 = call double @__ocml_copysign_f64(double noundef 0.000000e+00, double noundef %50) #8
+  store double %call90, ptr %__d.addr.ascast, align 8, !tbaa !14
+  br label %if.end91
+
+if.end91:                                         ; preds = %if.then89, %if.end86
+  store i32 1, ptr %__recalc.ascast, align 4, !tbaa !18
+  br label %if.end92
+
+if.end92:                                         ; preds = %if.end91, %lor.lhs.false68, %if.end57
+  %51 = load i32, ptr %__recalc.ascast, align 4, !tbaa !18
+  %tobool93 = icmp ne i32 %51, 0
+  br i1 %tobool93, label %if.then94, label %if.end103
+
+if.then94:                                        ; preds = %if.end92
+  %52 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %53 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %54 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %55 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %mul96 = fmul double %54, %55
+  %neg = fneg double %mul96
+  %56 = call double @llvm.fmuladd.f64(double %52, double %53, double %neg)
+  %mul97 = fmul double 0x7FF0000000000000, %56
+  %z.ascast.realp98 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 0
+  store double %mul97, ptr %z.ascast.realp98, align 8, !tbaa !14
+  %57 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %58 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %59 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %60 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %mul100 = fmul double %59, %60
+  %61 = call double @llvm.fmuladd.f64(double %57, double %58, double %mul100)
+  %mul101 = fmul double 0x7FF0000000000000, %61
+  %z.ascast.imagp102 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 1
+  store double %mul101, ptr %z.ascast.imagp102, align 8, !tbaa !14
+  br label %if.end103
+
+if.end103:                                        ; preds = %if.then94, %if.end92
+  call void @llvm.lifetime.end.p5(i64 4, ptr addrspace(5) %__recalc) #7
+  br label %if.end104
+
+if.end104:                                        ; preds = %if.end103, %land.lhs.true, %entry
+  %z.ascast.realp105 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 0
+  %z.ascast.real = load double, ptr %z.ascast.realp105, align 8
+  %z.ascast.imagp106 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 1
+  %z.ascast.imag = load double, ptr %z.ascast.imagp106, align 8
+  %retval.ascast.realp = getelementptr inbounds nuw { double, double }, ptr %retval.ascast, i32 0, i32 0
+  %retval.ascast.imagp = getelementptr inbounds nuw { double, double }, ptr %retval.ascast, i32 0, i32 1
+  store double %z.ascast.real, ptr %retval.ascast.realp, align 8
+  store double %z.ascast.imag, ptr %retval.ascast.imagp, align 8
+  call void @llvm.lifetime.end.p5(i64 16, ptr addrspace(5) %z) #7
+  call void @llvm.lifetime.end.p5(i64 8, ptr addrspace(5) %__bc) #7
+  call void @llvm.lifetime.end.p5(i64 8, ptr addrspace(5) %__ad) #7
+  call void @llvm.lifetime.end.p5(i64 8, ptr addrspace(5) %__bd) #7
+  call void @llvm.lifetime.end.p5(i64 8, ptr addrspace(5) %__ac) #7
+  %62 = load { double, double }, ptr %retval.ascast, align 8
+  ret { double, double } %62
+}
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.start.p5(i64 immarg, ptr addrspace(5) captures(none)) #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.fmuladd.f64(double, double, double) #2
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.end.p5(i64 immarg, ptr addrspace(5) captures(none)) #1
+
+; Function Attrs: cold convergent mustprogress noinline nounwind optsize
+define weak hidden [2 x i32] @__mulsc3(float noundef %__a, float noundef %__b, float noundef %__c, float noundef %__d) #0 {
+entry:
+  %retval = alloca { float, float }, align 4, addrspace(5)
+  %__a.addr = alloca float, align 4, addrspace(5)
+  %__b.addr = alloca float, align 4, addrspace(5)
+  %__c.addr = alloca float, align 4, addrspace(5)
+  %__d.addr = alloca float, align 4, addrspace(5)
+  %__ac = alloca float, align 4, addrspace(5)
+  %__bd = alloca float, align 4, addrspace(5)
+  %__ad = alloca float, align 4, addrspace(5)
+  %__bc = alloca float, align 4, addrspace(5)
+  %z = alloca { float, float }, align 4, addrspace(5)
+  %__recalc = alloca i32, align 4, addrspace(5)
+  %cleanup.dest.slot = alloca i32, align 4, addrspace(5)
+  %retval.ascast = addrspacecast ptr addrspace(5) %retval to ptr
+  %__a.addr.ascast = addrspacecast ptr addrspace(5) %__a.addr to ptr
+  %__b.addr.ascast = addrspacecast ptr addrspace(5) %__b.addr to ptr
+  %__c.addr.ascast = addrspacecast ptr addrspace(5) %__c.addr to ptr
+  %__d.addr.ascast = addrspacecast ptr addrspace(5) %__d.addr to ptr
+  %__ac.ascast = addrspacecast ptr addrspace(5) %__ac to ptr
+  %__bd.ascast = addrspacecast ptr addrspace(5) %__bd to ptr
+  %__ad.ascast = addrspacecast ptr addrspace(5) %__ad to ptr
+  %__bc.ascast = addrspacecast ptr addrspace(5) %__bc to ptr
+  %z.ascast = addrspacecast ptr addrspace(5) %z to ptr
+  %__recalc.ascast = addrspacecast ptr addrspace(5) %__recalc to ptr
+  store float %__a, ptr %__a.addr.ascast, align 4, !tbaa !20
+  store float %__b, ptr %__b.addr.ascast, align 4, !tbaa !20
+  store float %__c, ptr %__c.addr.ascast, align 4, !tbaa !20
+  store float %__d, ptr %__d.addr.ascast, align 4, !tbaa !20
+  call void @llvm.lifetime.start.p5(i64 4, ptr addrspace(5) %__ac) #7
+  %0 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %1 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %mul = fmul float %0, %1
+  store float %mul, ptr %__ac.ascast, align 4, !tbaa !20
+  call void @llvm.lifetime.start.p5(i64 4, ptr addrspace(5) %__bd) #7
+  %2 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %3 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %mul1 = fmul float %2, %3
+  store float %mul1, ptr %__bd.ascast, align 4, !tbaa !20
+  call void @llvm.lifetime.start.p5(i64 4, ptr addrspace(5) %__ad) #7
+  %4 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %5 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %mul2 = fmul float %4, %5
+  store float %mul2, ptr %__ad.ascast, align 4, !tbaa !20
+  call void @llvm.lifetime.start.p5(i64 4, ptr addrspace(5) %__bc) #7
+  %6 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %7 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %mul3 = fmul float %6, %7
+  store float %mul3, ptr %__bc.ascast, align 4, !tbaa !20
+  call void @llvm.lifetime.start.p5(i64 8, ptr addrspace(5) %z) #7
+  %8 = load float, ptr %__ac.ascast, align 4, !tbaa !20
+  %9 = load float, ptr %__bd.ascast, align 4, !tbaa !20
+  %sub = fsub float %8, %9
+  %z.ascast.realp = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 0
+  store float %sub, ptr %z.ascast.realp, align 4, !tbaa !20
+  %10 = load float, ptr %__ad.ascast, align 4, !tbaa !20
+  %11 = load float, ptr %__bc.ascast, align 4, !tbaa !20
+  %add = fadd float %10, %11
+  %z.ascast.imagp = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 1
+  store float %add, ptr %z.ascast.imagp, align 4, !tbaa !20
+  %z.ascast.realp4 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 0
+  %12 = load float, ptr %z.ascast.realp4, align 4, !tbaa !20
+  %call = call i32 @__ocml_isnan_f32(float noundef %12) #8
+  %tobool = icmp ne i32 %call, 0
+  br i1 %tobool, label %land.lhs.true, label %if.end104
+
+land.lhs.true:                                    ; preds = %entry
+  %z.ascast.imagp5 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 1
+  %13 = load float, ptr %z.ascast.imagp5, align 4, !tbaa !20
+  %call6 = call i32 @__ocml_isnan_f32(float noundef %13) #8
+  %tobool7 = icmp ne i32 %call6, 0
+  br i1 %tobool7, label %if.then, label %if.end104
+
+if.then:                                          ; preds = %land.lhs.true
+  call void @llvm.lifetime.start.p5(i64 4, ptr addrspace(5) %__recalc) #7
+  store i32 0, ptr %__recalc.ascast, align 4, !tbaa !18
+  %14 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %call8 = call i32 @__ocml_isinf_f32(float noundef %14) #8
+  %tobool9 = icmp ne i32 %call8, 0
+  br i1 %tobool9, label %if.then12, label %lor.lhs.false
+
+lor.lhs.false:                                    ; preds = %if.then
+  %15 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %call10 = call i32 @__ocml_isinf_f32(float noundef %15) #8
+  %tobool11 = icmp ne i32 %call10, 0
+  br i1 %tobool11, label %if.then12, label %if.end30
+
+if.then12:                                        ; preds = %lor.lhs.false, %if.then
+  %16 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %call13 = call i32 @__ocml_isinf_f32(float noundef %16) #8
+  %tobool14 = icmp ne i32 %call13, 0
+  %17 = zext i1 %tobool14 to i64
+  %cond = select i1 %tobool14, i32 1, i32 0
+  %conv = sitofp i32 %cond to float
+  %18 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %call15 = call float @__ocml_copysign_f32(float noundef %conv, float noundef %18) #8
+  store float %call15, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %19 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %call16 = call i32 @__ocml_isinf_f32(float noundef %19) #8
+  %tobool17 = icmp ne i32 %call16, 0
+  %20 = zext i1 %tobool17 to i64
+  %cond18 = select i1 %tobool17, i32 1, i32 0
+  %conv19 = sitofp i32 %cond18 to float
+  %21 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %call20 = call float @__ocml_copysign_f32(float noundef %conv19, float noundef %21) #8
+  store float %call20, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %22 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call21 = call i32 @__ocml_isnan_f32(float noundef %22) #8
+  %tobool22 = icmp ne i32 %call21, 0
+  br i1 %tobool22, label %if.then23, label %if.end
+
+if.then23:                                        ; preds = %if.then12
+  %23 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call24 = call float @__ocml_copysign_f32(float noundef 0.000000e+00, float noundef %23) #8
+  store float %call24, ptr %__c.addr.ascast, align 4, !tbaa !20
+  br label %if.end
+
+if.end:                                           ; preds = %if.then23, %if.then12
+  %24 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %call25 = call i32 @__ocml_isnan_f32(float noundef %24) #8
+  %tobool26 = icmp ne i32 %call25, 0
+  br i1 %tobool26, label %if.then27, label %if.end29
+
+if.then27:                                        ; preds = %if.end
+  %25 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %call28 = call float @__ocml_copysign_f32(float noundef 0.000000e+00, float noundef %25) #8
+  store float %call28, ptr %__d.addr.ascast, align 4, !tbaa !20
+  br label %if.end29
+
+if.end29:                                         ; preds = %if.then27, %if.end
+  store i32 1, ptr %__recalc.ascast, align 4, !tbaa !18
+  br label %if.end30
+
+if.end30:                                         ; preds = %if.end29, %lor.lhs.false
+  %26 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call31 = call i32 @__ocml_isinf_f32(float noundef %26) #8
+  %tobool32 = icmp ne i32 %call31, 0
+  br i1 %tobool32, label %if.then36, label %lor.lhs.false33
+
+lor.lhs.false33:                                  ; preds = %if.end30
+  %27 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %call34 = call i32 @__ocml_isinf_f32(float noundef %27) #8
+  %tobool35 = icmp ne i32 %call34, 0
+  br i1 %tobool35, label %if.then36, label %if.end57
+
+if.then36:                                        ; preds = %lor.lhs.false33, %if.end30
+  %28 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call37 = call i32 @__ocml_isinf_f32(float noundef %28) #8
+  %tobool38 = icmp ne i32 %call37, 0
+  %29 = zext i1 %tobool38 to i64
+  %cond39 = select i1 %tobool38, i32 1, i32 0
+  %conv40 = sitofp i32 %cond39 to float
+  %30 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call41 = call float @__ocml_copysign_f32(float noundef %conv40, float noundef %30) #8
+  store float %call41, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %31 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %call42 = call i32 @__ocml_isinf_f32(float noundef %31) #8
+  %tobool43 = icmp ne i32 %call42, 0
+  %32 = zext i1 %tobool43 to i64
+  %cond44 = select i1 %tobool43, i32 1, i32 0
+  %conv45 = sitofp i32 %cond44 to float
+  %33 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %call46 = call float @__ocml_copysign_f32(float noundef %conv45, float noundef %33) #8
+  store float %call46, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %34 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %call47 = call i32 @__ocml_isnan_f32(float noundef %34) #8
+  %tobool48 = icmp ne i32 %call47, 0
+  br i1 %tobool48, label %if.then49, label %if.end51
+
+if.then49:                                        ; preds = %if.then36
+  %35 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %call50 = call float @__ocml_copysign_f32(float noundef 0.000000e+00, float noundef %35) #8
+  store float %call50, ptr %__a.addr.ascast, align 4, !tbaa !20
+  br label %if.end51
+
+if.end51:                                         ; preds = %if.then49, %if.then36
+  %36 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %call52 = call i32 @__ocml_isnan_f32(float noundef %36) #8
+  %tobool53 = icmp ne i32 %call52, 0
+  br i1 %tobool53, label %if.then54, label %if.end56
+
+if.then54:                                        ; preds = %if.end51
+  %37 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %call55 = call float @__ocml_copysign_f32(float noundef 0.000000e+00, float noundef %37) #8
+  store float %call55, ptr %__b.addr.ascast, align 4, !tbaa !20
+  br label %if.end56
+
+if.end56:                                         ; preds = %if.then54, %if.end51
+  store i32 1, ptr %__recalc.ascast, align 4, !tbaa !18
+  br label %if.end57
+
+if.end57:                                         ; preds = %if.end56, %lor.lhs.false33
+  %38 = load i32, ptr %__recalc.ascast, align 4, !tbaa !18
+  %tobool58 = icmp ne i32 %38, 0
+  br i1 %tobool58, label %if.end92, label %land.lhs.true59
+
+land.lhs.true59:                                  ; preds = %if.end57
+  %39 = load float, ptr %__ac.ascast, align 4, !tbaa !20
+  %call60 = call i32 @__ocml_isinf_f32(float noundef %39) #8
+  %tobool61 = icmp ne i32 %call60, 0
+  br i1 %tobool61, label %if.then71, label %lor.lhs.false62
+
+lor.lhs.false62:                                  ; preds = %land.lhs.true59
+  %40 = load float, ptr %__bd.ascast, align 4, !tbaa !20
+  %call63 = call i32 @__ocml_isinf_f32(float noundef %40) #8
+  %tobool64 = icmp ne i32 %call63, 0
+  br i1 %tobool64, label %if.then71, label %lor.lhs.false65
+
+lor.lhs.false65:                                  ; preds = %lor.lhs.false62
+  %41 = load float, ptr %__ad.ascast, align 4, !tbaa !20
+  %call66 = call i32 @__ocml_isinf_f32(float noundef %41) #8
+  %tobool67 = icmp ne i32 %call66, 0
+  br i1 %tobool67, label %if.then71, label %lor.lhs.false68
+
+lor.lhs.false68:                                  ; preds = %lor.lhs.false65
+  %42 = load float, ptr %__bc.ascast, align 4, !tbaa !20
+  %call69 = call i32 @__ocml_isinf_f32(float noundef %42) #8
+  %tobool70 = icmp ne i32 %call69, 0
+  br i1 %tobool70, label %if.then71, label %if.end92
+
+if.then71:                                        ; preds = %lor.lhs.false68, %lor.lhs.false65, %lor.lhs.false62, %land.lhs.true59
+  %43 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %call72 = call i32 @__ocml_isnan_f32(float noundef %43) #8
+  %tobool73 = icmp ne i32 %call72, 0
+  br i1 %tobool73, label %if.then74, label %if.end76
+
+if.then74:                                        ; preds = %if.then71
+  %44 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %call75 = call float @__ocml_copysign_f32(float noundef 0.000000e+00, float noundef %44) #8
+  store float %call75, ptr %__a.addr.ascast, align 4, !tbaa !20
+  br label %if.end76
+
+if.end76:                                         ; preds = %if.then74, %if.then71
+  %45 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %call77 = call i32 @__ocml_isnan_f32(float noundef %45) #8
+  %tobool78 = icmp ne i32 %call77, 0
+  br i1 %tobool78, label %if.then79, label %if.end81
+
+if.then79:                                        ; preds = %if.end76
+  %46 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %call80 = call float @__ocml_copysign_f32(float noundef 0.000000e+00, float noundef %46) #8
+  store float %call80, ptr %__b.addr.ascast, align 4, !tbaa !20
+  br label %if.end81
+
+if.end81:                                         ; preds = %if.then79, %if.end76
+  %47 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call82 = call i32 @__ocml_isnan_f32(float noundef %47) #8
+  %tobool83 = icmp ne i32 %call82, 0
+  br i1 %tobool83, label %if.then84, label %if.end86
+
+if.then84:                                        ; preds = %if.end81
+  %48 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call85 = call float @__ocml_copysign_f32(float noundef 0.000000e+00, float noundef %48) #8
+  store float %call85, ptr %__c.addr.ascast, align 4, !tbaa !20
+  br label %if.end86
+
+if.end86:                                         ; preds = %if.then84, %if.end81
+  %49 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %call87 = call i32 @__ocml_isnan_f32(float noundef %49) #8
+  %tobool88 = icmp ne i32 %call87, 0
+  br i1 %tobool88, label %if.then89, label %if.end91
+
+if.then89:                                        ; preds = %if.end86
+  %50 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %call90 = call float @__ocml_copysign_f32(float noundef 0.000000e+00, float noundef %50) #8
+  store float %call90, ptr %__d.addr.ascast, align 4, !tbaa !20
+  br label %if.end91
+
+if.end91:                                         ; preds = %if.then89, %if.end86
+  store i32 1, ptr %__recalc.ascast, align 4, !tbaa !18
+  br label %if.end92
+
+if.end92:                                         ; preds = %if.end91, %lor.lhs.false68, %if.end57
+  %51 = load i32, ptr %__recalc.ascast, align 4, !tbaa !18
+  %tobool93 = icmp ne i32 %51, 0
+  br i1 %tobool93, label %if.then94, label %if.end103
+
+if.then94:                                        ; preds = %if.end92
+  %52 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %53 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %54 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %55 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %mul96 = fmul float %54, %55
+  %neg = fneg float %mul96
+  %56 = call float @llvm.fmuladd.f32(float %52, float %53, float %neg)
+  %mul97 = fmul float 0x7FF0000000000000, %56
+  %z.ascast.realp98 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 0
+  store float %mul97, ptr %z.ascast.realp98, align 4, !tbaa !20
+  %57 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %58 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %59 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %60 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %mul100 = fmul float %59, %60
+  %61 = call float @llvm.fmuladd.f32(float %57, float %58, float %mul100)
+  %mul101 = fmul float 0x7FF0000000000000, %61
+  %z.ascast.imagp102 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 1
+  store float %mul101, ptr %z.ascast.imagp102, align 4, !tbaa !20
+  br label %if.end103
+
+if.end103:                                        ; preds = %if.then94, %if.end92
+  call void @llvm.lifetime.end.p5(i64 4, ptr addrspace(5) %__recalc) #7
+  br label %if.end104
+
+if.end104:                                        ; preds = %if.end103, %land.lhs.true, %entry
+  %z.ascast.realp105 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 0
+  %z.ascast.real = load float, ptr %z.ascast.realp105, align 4
+  %z.ascast.imagp106 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 1
+  %z.ascast.imag = load float, ptr %z.ascast.imagp106, align 4
+  %retval.ascast.realp = getelementptr inbounds nuw { float, float }, ptr %retval.ascast, i32 0, i32 0
+  %retval.ascast.imagp = getelementptr inbounds nuw { float, float }, ptr %retval.ascast, i32 0, i32 1
+  store float %z.ascast.real, ptr %retval.ascast.realp, align 4
+  store float %z.ascast.imag, ptr %retval.ascast.imagp, align 4
+  call void @llvm.lifetime.end.p5(i64 8, ptr addrspace(5) %z) #7
+  call void @llvm.lifetime.end.p5(i64 4, ptr addrspace(5) %__bc) #7
+  call void @llvm.lifetime.end.p5(i64 4, ptr addrspace(5) %__ad) #7
+  call void @llvm.lifetime.end.p5(i64 4, ptr addrspace(5) %__bd) #7
+  call void @llvm.lifetime.end.p5(i64 4, ptr addrspace(5) %__ac) #7
+  %62 = load [2 x i32], ptr %retval.ascast, align 4
+  ret [2 x i32] %62
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.fmuladd.f32(float, float, float) #2
+
+; Function Attrs: cold convergent mustprogress noinline nounwind optsize
+define weak hidden { double, double } @__divdc3(double noundef %__a, double noundef %__b, double noundef %__c, double noundef %__d) #0 {
+entry:
+  %retval = alloca { double, double }, align 8, addrspace(5)
+  %__a.addr = alloca double, align 8, addrspace(5)
+  %__b.addr = alloca double, align 8, addrspace(5)
+  %__c.addr = alloca double, align 8, addrspace(5)
+  %__d.addr = alloca double, align 8, addrspace(5)
+  %__ilogbw = alloca i32, align 4, addrspace(5)
+  %__logbw = alloca double, align 8, addrspace(5)
+  %__denom = alloca double, align 8, addrspace(5)
+  %z = alloca { double, double }, align 8, addrspace(5)
+  %cleanup.dest.slot = alloca i32, align 4, addrspace(5)
+  %retval.ascast = addrspacecast ptr addrspace(5) %retval to ptr
+  %__a.addr.ascast = addrspacecast ptr addrspace(5) %__a.addr to ptr
+  %__b.addr.ascast = addrspacecast ptr addrspace(5) %__b.addr to ptr
+  %__c.addr.ascast = addrspacecast ptr addrspace(5) %__c.addr to ptr
+  %__d.addr.ascast = addrspacecast ptr addrspace(5) %__d.addr to ptr
+  %__ilogbw.ascast = addrspacecast ptr addrspace(5) %__ilogbw to ptr
+  %__logbw.ascast = addrspacecast ptr addrspace(5) %__logbw to ptr
+  %__denom.ascast = addrspacecast ptr addrspace(5) %__denom to ptr
+  %z.ascast = addrspacecast ptr addrspace(5) %z to ptr
+  store double %__a, ptr %__a.addr.ascast, align 8, !tbaa !14
+  store double %__b, ptr %__b.addr.ascast, align 8, !tbaa !14
+  store double %__c, ptr %__c.addr.ascast, align 8, !tbaa !14
+  store double %__d, ptr %__d.addr.ascast, align 8, !tbaa !14
+  call void @llvm.lifetime.start.p5(i64 4, ptr addrspace(5) %__ilogbw) #7
+  store i32 0, ptr %__ilogbw.ascast, align 4, !tbaa !18
+  call void @llvm.lifetime.start.p5(i64 8, ptr addrspace(5) %__logbw) #7
+  %0 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call = call double @__ocml_fabs_f64(double noundef %0) #8
+  %1 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %call1 = call double @__ocml_fabs_f64(double noundef %1) #8
+  %call2 = call double @__ocml_fmax_f64(double noundef %call, double noundef %call1) #8
+  %call3 = call double @__ocml_logb_f64(double noundef %call2) #8
+  store double %call3, ptr %__logbw.ascast, align 8, !tbaa !14
+  %2 = load double, ptr %__logbw.ascast, align 8, !tbaa !14
+  %call4 = call i32 @__ocml_isfinite_f64(double noundef %2) #8
+  %tobool = icmp ne i32 %call4, 0
+  br i1 %tobool, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  %3 = load double, ptr %__logbw.ascast, align 8, !tbaa !14
+  %conv = fptosi double %3 to i32
+  store i32 %conv, ptr %__ilogbw.ascast, align 4, !tbaa !18
+  %4 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %5 = load i32, ptr %__ilogbw.ascast, align 4, !tbaa !18
+  %sub = sub nsw i32 0, %5
+  %call5 = call double @__ocml_scalbn_f64(double noundef %4, i32 noundef %sub) #8
+  store double %call5, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %6 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %7 = load i32, ptr %__ilogbw.ascast, align 4, !tbaa !18
+  %sub6 = sub nsw i32 0, %7
+  %call7 = call double @__ocml_scalbn_f64(double noundef %6, i32 noundef %sub6) #8
+  store double %call7, ptr %__d.addr.ascast, align 8, !tbaa !14
+  br label %if.end
+
+if.end:                                           ; preds = %if.then, %entry
+  call void @llvm.lifetime.start.p5(i64 8, ptr addrspace(5) %__denom) #7
+  %8 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %9 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %10 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %11 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %mul8 = fmul double %10, %11
+  %12 = call double @llvm.fmuladd.f64(double %8, double %9, double %mul8)
+  store double %12, ptr %__denom.ascast, align 8, !tbaa !14
+  call void @llvm.lifetime.start.p5(i64 16, ptr addrspace(5) %z) #7
+  %13 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %14 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %15 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %16 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %mul9 = fmul double %15, %16
+  %17 = call double @llvm.fmuladd.f64(double %13, double %14, double %mul9)
+  %18 = load double, ptr %__denom.ascast, align 8, !tbaa !14
+  %div = fdiv double %17, %18
+  %19 = load i32, ptr %__ilogbw.ascast, align 4, !tbaa !18
+  %sub10 = sub nsw i32 0, %19
+  %call11 = call double @__ocml_scalbn_f64(double noundef %div, i32 noundef %sub10) #8
+  %z.ascast.realp = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 0
+  store double %call11, ptr %z.ascast.realp, align 8, !tbaa !14
+  %20 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %21 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %22 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %23 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %mul12 = fmul double %22, %23
+  %neg = fneg double %mul12
+  %24 = call double @llvm.fmuladd.f64(double %20, double %21, double %neg)
+  %25 = load double, ptr %__denom.ascast, align 8, !tbaa !14
+  %div13 = fdiv double %24, %25
+  %26 = load i32, ptr %__ilogbw.ascast, align 4, !tbaa !18
+  %sub14 = sub nsw i32 0, %26
+  %call15 = call double @__ocml_scalbn_f64(double noundef %div13, i32 noundef %sub14) #8
+  %z.ascast.imagp = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 1
+  store double %call15, ptr %z.ascast.imagp, align 8, !tbaa !14
+  %z.ascast.realp16 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 0
+  %27 = load double, ptr %z.ascast.realp16, align 8, !tbaa !14
+  %call17 = call i32 @__ocml_isnan_f64(double noundef %27) #8
+  %tobool18 = icmp ne i32 %call17, 0
+  br i1 %tobool18, label %land.lhs.true, label %if.end94
+
+land.lhs.true:                                    ; preds = %if.end
+  %z.ascast.imagp19 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 1
+  %28 = load double, ptr %z.ascast.imagp19, align 8, !tbaa !14
+  %call20 = call i32 @__ocml_isnan_f64(double noundef %28) #8
+  %tobool21 = icmp ne i32 %call20, 0
+  br i1 %tobool21, label %if.then22, label %if.end94
+
+if.then22:                                        ; preds = %land.lhs.true
+  %29 = load double, ptr %__denom.ascast, align 8, !tbaa !14
+  %cmp = fcmp oeq double %29, 0.000000e+00
+  br i1 %cmp, label %land.lhs.true23, label %if.else
+
+land.lhs.true23:                                  ; preds = %if.then22
+  %30 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %call24 = call i32 @__ocml_isnan_f64(double noundef %30) #8
+  %tobool25 = icmp ne i32 %call24, 0
+  br i1 %tobool25, label %lor.lhs.false, label %if.then28
+
+lor.lhs.false:                                    ; preds = %land.lhs.true23
+  %31 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %call26 = call i32 @__ocml_isnan_f64(double noundef %31) #8
+  %tobool27 = icmp ne i32 %call26, 0
+  br i1 %tobool27, label %if.else, label %if.then28
+
+if.then28:                                        ; preds = %lor.lhs.false, %land.lhs.true23
+  %32 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call29 = call double @__ocml_copysign_f64(double noundef 0x7FF0000000000000, double noundef %32) #8
+  %33 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %mul = fmul double %call29, %33
+  %z.ascast.realp30 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 0
+  store double %mul, ptr %z.ascast.realp30, align 8, !tbaa !14
+  %34 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call31 = call double @__ocml_copysign_f64(double noundef 0x7FF0000000000000, double noundef %34) #8
+  %35 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %mul32 = fmul double %call31, %35
+  %z.ascast.imagp33 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 1
+  store double %mul32, ptr %z.ascast.imagp33, align 8, !tbaa !14
+  br label %if.end93
+
+if.else:                                          ; preds = %lor.lhs.false, %if.then22
+  %36 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %call34 = call i32 @__ocml_isinf_f64(double noundef %36) #8
+  %tobool35 = icmp ne i32 %call34, 0
+  br i1 %tobool35, label %land.lhs.true39, label %lor.lhs.false36
+
+lor.lhs.false36:                                  ; preds = %if.else
+  %37 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %call37 = call i32 @__ocml_isinf_f64(double noundef %37) #8
+  %tobool38 = icmp ne i32 %call37, 0
+  br i1 %tobool38, label %land.lhs.true39, label %if.else62
+
+land.lhs.true39:                                  ; preds = %lor.lhs.false36, %if.else
+  %38 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call40 = call i32 @__ocml_isfinite_f64(double noundef %38) #8
+  %tobool41 = icmp ne i32 %call40, 0
+  br i1 %tobool41, label %land.lhs.true42, label %if.else62
+
+land.lhs.true42:                                  ; preds = %land.lhs.true39
+  %39 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %call43 = call i32 @__ocml_isfinite_f64(double noundef %39) #8
+  %tobool44 = icmp ne i32 %call43, 0
+  br i1 %tobool44, label %if.then45, label %if.else62
+
+if.then45:                                        ; preds = %land.lhs.true42
+  %40 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %call46 = call i32 @__ocml_isinf_f64(double noundef %40) #8
+  %tobool47 = icmp ne i32 %call46, 0
+  %41 = zext i1 %tobool47 to i64
+  %cond = select i1 %tobool47, double 1.000000e+00, double 0.000000e+00
+  %42 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %call48 = call double @__ocml_copysign_f64(double noundef %cond, double noundef %42) #8
+  store double %call48, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %43 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %call49 = call i32 @__ocml_isinf_f64(double noundef %43) #8
+  %tobool50 = icmp ne i32 %call49, 0
+  %44 = zext i1 %tobool50 to i64
+  %cond51 = select i1 %tobool50, double 1.000000e+00, double 0.000000e+00
+  %45 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %call52 = call double @__ocml_copysign_f64(double noundef %cond51, double noundef %45) #8
+  store double %call52, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %46 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %47 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %48 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %49 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %mul54 = fmul double %48, %49
+  %50 = call double @llvm.fmuladd.f64(double %46, double %47, double %mul54)
+  %mul55 = fmul double 0x7FF0000000000000, %50
+  %z.ascast.realp56 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 0
+  store double %mul55, ptr %z.ascast.realp56, align 8, !tbaa !14
+  %51 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %52 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %53 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %54 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %mul58 = fmul double %53, %54
+  %neg59 = fneg double %mul58
+  %55 = call double @llvm.fmuladd.f64(double %51, double %52, double %neg59)
+  %mul60 = fmul double 0x7FF0000000000000, %55
+  %z.ascast.imagp61 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 1
+  store double %mul60, ptr %z.ascast.imagp61, align 8, !tbaa !14
+  br label %if.end92
+
+if.else62:                                        ; preds = %land.lhs.true42, %land.lhs.true39, %lor.lhs.false36
+  %56 = load double, ptr %__logbw.ascast, align 8, !tbaa !14
+  %call63 = call i32 @__ocml_isinf_f64(double noundef %56) #8
+  %tobool64 = icmp ne i32 %call63, 0
+  br i1 %tobool64, label %land.lhs.true65, label %if.end91
+
+land.lhs.true65:                                  ; preds = %if.else62
+  %57 = load double, ptr %__logbw.ascast, align 8, !tbaa !14
+  %cmp66 = fcmp ogt double %57, 0.000000e+00
+  br i1 %cmp66, label %land.lhs.true67, label %if.end91
+
+land.lhs.true67:                                  ; preds = %land.lhs.true65
+  %58 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %call68 = call i32 @__ocml_isfinite_f64(double noundef %58) #8
+  %tobool69 = icmp ne i32 %call68, 0
+  br i1 %tobool69, label %land.lhs.true70, label %if.end91
+
+land.lhs.true70:                                  ; preds = %land.lhs.true67
+  %59 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %call71 = call i32 @__ocml_isfinite_f64(double noundef %59) #8
+  %tobool72 = icmp ne i32 %call71, 0
+  br i1 %tobool72, label %if.then73, label %if.end91
+
+if.then73:                                        ; preds = %land.lhs.true70
+  %60 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call74 = call i32 @__ocml_isinf_f64(double noundef %60) #8
+  %tobool75 = icmp ne i32 %call74, 0
+  %61 = zext i1 %tobool75 to i64
+  %cond76 = select i1 %tobool75, double 1.000000e+00, double 0.000000e+00
+  %62 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %call77 = call double @__ocml_copysign_f64(double noundef %cond76, double noundef %62) #8
+  store double %call77, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %63 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %call78 = call i32 @__ocml_isinf_f64(double noundef %63) #8
+  %tobool79 = icmp ne i32 %call78, 0
+  %64 = zext i1 %tobool79 to i64
+  %cond80 = select i1 %tobool79, double 1.000000e+00, double 0.000000e+00
+  %65 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %call81 = call double @__ocml_copysign_f64(double noundef %cond80, double noundef %65) #8
+  store double %call81, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %66 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %67 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %68 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %69 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %mul83 = fmul double %68, %69
+  %70 = call double @llvm.fmuladd.f64(double %66, double %67, double %mul83)
+  %mul84 = fmul double 0.000000e+00, %70
+  %z.ascast.realp85 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 0
+  store double %mul84, ptr %z.ascast.realp85, align 8, !tbaa !14
+  %71 = load double, ptr %__b.addr.ascast, align 8, !tbaa !14
+  %72 = load double, ptr %__c.addr.ascast, align 8, !tbaa !14
+  %73 = load double, ptr %__a.addr.ascast, align 8, !tbaa !14
+  %74 = load double, ptr %__d.addr.ascast, align 8, !tbaa !14
+  %mul87 = fmul double %73, %74
+  %neg88 = fneg double %mul87
+  %75 = call double @llvm.fmuladd.f64(double %71, double %72, double %neg88)
+  %mul89 = fmul double 0.000000e+00, %75
+  %z.ascast.imagp90 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 1
+  store double %mul89, ptr %z.ascast.imagp90, align 8, !tbaa !14
+  br label %if.end91
+
+if.end91:                                         ; preds = %if.then73, %land.lhs.true70, %land.lhs.true67, %land.lhs.true65, %if.else62
+  br label %if.end92
+
+if.end92:                                         ; preds = %if.end91, %if.then45
+  br label %if.end93
+
+if.end93:                                         ; preds = %if.end92, %if.then28
+  br label %if.end94
+
+if.end94:                                         ; preds = %if.end93, %land.lhs.true, %if.end
+  %z.ascast.realp95 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 0
+  %z.ascast.real = load double, ptr %z.ascast.realp95, align 8
+  %z.ascast.imagp96 = getelementptr inbounds nuw { double, double }, ptr %z.ascast, i32 0, i32 1
+  %z.ascast.imag = load double, ptr %z.ascast.imagp96, align 8
+  %retval.ascast.realp = getelementptr inbounds nuw { double, double }, ptr %retval.ascast, i32 0, i32 0
+  %retval.ascast.imagp = getelementptr inbounds nuw { double, double }, ptr %retval.ascast, i32 0, i32 1
+  store double %z.ascast.real, ptr %retval.ascast.realp, align 8
+  store double %z.ascast.imag, ptr %retval.ascast.imagp, align 8
+  call void @llvm.lifetime.end.p5(i64 16, ptr addrspace(5) %z) #7
+  call void @llvm.lifetime.end.p5(i64 8, ptr addrspace(5) %__denom) #7
+  call void @llvm.lifetime.end.p5(i64 8, ptr addrspace(5) %__logbw) #7
+  call void @llvm.lifetime.end.p5(i64 4, ptr addrspace(5) %__ilogbw) #7
+  %76 = load { double, double }, ptr %retval.ascast, align 8
+  ret { double, double } %76
+}
+
+; Function Attrs: cold convergent mustprogress noinline nounwind optsize
+define weak hidden [2 x i32] @__divsc3(float noundef %__a, float noundef %__b, float noundef %__c, float noundef %__d) #0 {
+entry:
+  %retval = alloca { float, float }, align 4, addrspace(5)
+  %__a.addr = alloca float, align 4, addrspace(5)
+  %__b.addr = alloca float, align 4, addrspace(5)
+  %__c.addr = alloca float, align 4, addrspace(5)
+  %__d.addr = alloca float, align 4, addrspace(5)
+  %__ilogbw = alloca i32, align 4, addrspace(5)
+  %__logbw = alloca float, align 4, addrspace(5)
+  %__denom = alloca float, align 4, addrspace(5)
+  %z = alloca { float, float }, align 4, addrspace(5)
+  %cleanup.dest.slot = alloca i32, align 4, addrspace(5)
+  %retval.ascast = addrspacecast ptr addrspace(5) %retval to ptr
+  %__a.addr.ascast = addrspacecast ptr addrspace(5) %__a.addr to ptr
+  %__b.addr.ascast = addrspacecast ptr addrspace(5) %__b.addr to ptr
+  %__c.addr.ascast = addrspacecast ptr addrspace(5) %__c.addr to ptr
+  %__d.addr.ascast = addrspacecast ptr addrspace(5) %__d.addr to ptr
+  %__ilogbw.ascast = addrspacecast ptr addrspace(5) %__ilogbw to ptr
+  %__logbw.ascast = addrspacecast ptr addrspace(5) %__logbw to ptr
+  %__denom.ascast = addrspacecast ptr addrspace(5) %__denom to ptr
+  %z.ascast = addrspacecast ptr addrspace(5) %z to ptr
+  store float %__a, ptr %__a.addr.ascast, align 4, !tbaa !20
+  store float %__b, ptr %__b.addr.ascast, align 4, !tbaa !20
+  store float %__c, ptr %__c.addr.ascast, align 4, !tbaa !20
+  store float %__d, ptr %__d.addr.ascast, align 4, !tbaa !20
+  call void @llvm.lifetime.start.p5(i64 4, ptr addrspace(5) %__ilogbw) #7
+  store i32 0, ptr %__ilogbw.ascast, align 4, !tbaa !18
+  call void @llvm.lifetime.start.p5(i64 4, ptr addrspace(5) %__logbw) #7
+  %0 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call = call float @__ocml_fabs_f32(float noundef %0) #8
+  %1 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %call1 = call float @__ocml_fabs_f32(float noundef %1) #8
+  %call2 = call float @__ocml_fmax_f32(float noundef %call, float noundef %call1) #8
+  %call3 = call float @__ocml_logb_f32(float noundef %call2) #8
+  store float %call3, ptr %__logbw.ascast, align 4, !tbaa !20
+  %2 = load float, ptr %__logbw.ascast, align 4, !tbaa !20
+  %call4 = call i32 @__ocml_isfinite_f32(float noundef %2) #8
+  %tobool = icmp ne i32 %call4, 0
+  br i1 %tobool, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  %3 = load float, ptr %__logbw.ascast, align 4, !tbaa !20
+  %conv = fptosi float %3 to i32
+  store i32 %conv, ptr %__ilogbw.ascast, align 4, !tbaa !18
+  %4 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %5 = load i32, ptr %__ilogbw.ascast, align 4, !tbaa !18
+  %sub = sub nsw i32 0, %5
+  %call5 = call float @__ocml_scalbn_f32(float noundef %4, i32 noundef %sub) #8
+  store float %call5, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %6 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %7 = load i32, ptr %__ilogbw.ascast, align 4, !tbaa !18
+  %sub6 = sub nsw i32 0, %7
+  %call7 = call float @__ocml_scalbn_f32(float noundef %6, i32 noundef %sub6) #8
+  store float %call7, ptr %__d.addr.ascast, align 4, !tbaa !20
+  br label %if.end
+
+if.end:                                           ; preds = %if.then, %entry
+  call void @llvm.lifetime.start.p5(i64 4, ptr addrspace(5) %__denom) #7
+  %8 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %9 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %10 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %11 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %mul8 = fmul float %10, %11
+  %12 = call float @llvm.fmuladd.f32(float %8, float %9, float %mul8)
+  store float %12, ptr %__denom.ascast, align 4, !tbaa !20
+  call void @llvm.lifetime.start.p5(i64 8, ptr addrspace(5) %z) #7
+  %13 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %14 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %15 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %16 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %mul9 = fmul float %15, %16
+  %17 = call float @llvm.fmuladd.f32(float %13, float %14, float %mul9)
+  %18 = load float, ptr %__denom.ascast, align 4, !tbaa !20
+  %div = fdiv float %17, %18
+  %19 = load i32, ptr %__ilogbw.ascast, align 4, !tbaa !18
+  %sub10 = sub nsw i32 0, %19
+  %call11 = call float @__ocml_scalbn_f32(float noundef %div, i32 noundef %sub10) #8
+  %z.ascast.realp = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 0
+  store float %call11, ptr %z.ascast.realp, align 4, !tbaa !20
+  %20 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %21 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %22 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %23 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %mul12 = fmul float %22, %23
+  %neg = fneg float %mul12
+  %24 = call float @llvm.fmuladd.f32(float %20, float %21, float %neg)
+  %25 = load float, ptr %__denom.ascast, align 4, !tbaa !20
+  %div13 = fdiv float %24, %25
+  %26 = load i32, ptr %__ilogbw.ascast, align 4, !tbaa !18
+  %sub14 = sub nsw i32 0, %26
+  %call15 = call float @__ocml_scalbn_f32(float noundef %div13, i32 noundef %sub14) #8
+  %z.ascast.imagp = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 1
+  store float %call15, ptr %z.ascast.imagp, align 4, !tbaa !20
+  %z.ascast.realp16 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 0
+  %27 = load float, ptr %z.ascast.realp16, align 4, !tbaa !20
+  %call17 = call i32 @__ocml_isnan_f32(float noundef %27) #8
+  %tobool18 = icmp ne i32 %call17, 0
+  br i1 %tobool18, label %land.lhs.true, label %if.end98
+
+land.lhs.true:                                    ; preds = %if.end
+  %z.ascast.imagp19 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 1
+  %28 = load float, ptr %z.ascast.imagp19, align 4, !tbaa !20
+  %call20 = call i32 @__ocml_isnan_f32(float noundef %28) #8
+  %tobool21 = icmp ne i32 %call20, 0
+  br i1 %tobool21, label %if.then22, label %if.end98
+
+if.then22:                                        ; preds = %land.lhs.true
+  %29 = load float, ptr %__denom.ascast, align 4, !tbaa !20
+  %cmp = fcmp oeq float %29, 0.000000e+00
+  br i1 %cmp, label %land.lhs.true23, label %if.else
+
+land.lhs.true23:                                  ; preds = %if.then22
+  %30 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %call24 = call i32 @__ocml_isnan_f32(float noundef %30) #8
+  %tobool25 = icmp ne i32 %call24, 0
+  br i1 %tobool25, label %lor.lhs.false, label %if.then28
+
+lor.lhs.false:                                    ; preds = %land.lhs.true23
+  %31 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %call26 = call i32 @__ocml_isnan_f32(float noundef %31) #8
+  %tobool27 = icmp ne i32 %call26, 0
+  br i1 %tobool27, label %if.else, label %if.then28
+
+if.then28:                                        ; preds = %lor.lhs.false, %land.lhs.true23
+  %32 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call29 = call float @__ocml_copysign_f32(float noundef 0x7FF0000000000000, float noundef %32) #8
+  %33 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %mul = fmul float %call29, %33
+  %z.ascast.realp30 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 0
+  store float %mul, ptr %z.ascast.realp30, align 4, !tbaa !20
+  %34 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call31 = call float @__ocml_copysign_f32(float noundef 0x7FF0000000000000, float noundef %34) #8
+  %35 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %mul32 = fmul float %call31, %35
+  %z.ascast.imagp33 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 1
+  store float %mul32, ptr %z.ascast.imagp33, align 4, !tbaa !20
+  br label %if.end97
+
+if.else:                                          ; preds = %lor.lhs.false, %if.then22
+  %36 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %call34 = call i32 @__ocml_isinf_f32(float noundef %36) #8
+  %tobool35 = icmp ne i32 %call34, 0
+  br i1 %tobool35, label %land.lhs.true39, label %lor.lhs.false36
+
+lor.lhs.false36:                                  ; preds = %if.else
+  %37 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %call37 = call i32 @__ocml_isinf_f32(float noundef %37) #8
+  %tobool38 = icmp ne i32 %call37, 0
+  br i1 %tobool38, label %land.lhs.true39, label %if.else64
+
+land.lhs.true39:                                  ; preds = %lor.lhs.false36, %if.else
+  %38 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call40 = call i32 @__ocml_isfinite_f32(float noundef %38) #8
+  %tobool41 = icmp ne i32 %call40, 0
+  br i1 %tobool41, label %land.lhs.true42, label %if.else64
+
+land.lhs.true42:                                  ; preds = %land.lhs.true39
+  %39 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %call43 = call i32 @__ocml_isfinite_f32(float noundef %39) #8
+  %tobool44 = icmp ne i32 %call43, 0
+  br i1 %tobool44, label %if.then45, label %if.else64
+
+if.then45:                                        ; preds = %land.lhs.true42
+  %40 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %call46 = call i32 @__ocml_isinf_f32(float noundef %40) #8
+  %tobool47 = icmp ne i32 %call46, 0
+  %41 = zext i1 %tobool47 to i64
+  %cond = select i1 %tobool47, i32 1, i32 0
+  %conv48 = sitofp i32 %cond to float
+  %42 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %call49 = call float @__ocml_copysign_f32(float noundef %conv48, float noundef %42) #8
+  store float %call49, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %43 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %call50 = call i32 @__ocml_isinf_f32(float noundef %43) #8
+  %tobool51 = icmp ne i32 %call50, 0
+  %44 = zext i1 %tobool51 to i64
+  %cond52 = select i1 %tobool51, i32 1, i32 0
+  %conv53 = sitofp i32 %cond52 to float
+  %45 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %call54 = call float @__ocml_copysign_f32(float noundef %conv53, float noundef %45) #8
+  store float %call54, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %46 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %47 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %48 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %49 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %mul56 = fmul float %48, %49
+  %50 = call float @llvm.fmuladd.f32(float %46, float %47, float %mul56)
+  %mul57 = fmul float 0x7FF0000000000000, %50
+  %z.ascast.realp58 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 0
+  store float %mul57, ptr %z.ascast.realp58, align 4, !tbaa !20
+  %51 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %52 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %53 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %54 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %mul60 = fmul float %53, %54
+  %neg61 = fneg float %mul60
+  %55 = call float @llvm.fmuladd.f32(float %51, float %52, float %neg61)
+  %mul62 = fmul float 0x7FF0000000000000, %55
+  %z.ascast.imagp63 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 1
+  store float %mul62, ptr %z.ascast.imagp63, align 4, !tbaa !20
+  br label %if.end96
+
+if.else64:                                        ; preds = %land.lhs.true42, %land.lhs.true39, %lor.lhs.false36
+  %56 = load float, ptr %__logbw.ascast, align 4, !tbaa !20
+  %call65 = call i32 @__ocml_isinf_f32(float noundef %56) #8
+  %tobool66 = icmp ne i32 %call65, 0
+  br i1 %tobool66, label %land.lhs.true67, label %if.end95
+
+land.lhs.true67:                                  ; preds = %if.else64
+  %57 = load float, ptr %__logbw.ascast, align 4, !tbaa !20
+  %cmp68 = fcmp ogt float %57, 0.000000e+00
+  br i1 %cmp68, label %land.lhs.true69, label %if.end95
+
+land.lhs.true69:                                  ; preds = %land.lhs.true67
+  %58 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %call70 = call i32 @__ocml_isfinite_f32(float noundef %58) #8
+  %tobool71 = icmp ne i32 %call70, 0
+  br i1 %tobool71, label %land.lhs.true72, label %if.end95
+
+land.lhs.true72:                                  ; preds = %land.lhs.true69
+  %59 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %call73 = call i32 @__ocml_isfinite_f32(float noundef %59) #8
+  %tobool74 = icmp ne i32 %call73, 0
+  br i1 %tobool74, label %if.then75, label %if.end95
+
+if.then75:                                        ; preds = %land.lhs.true72
+  %60 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call76 = call i32 @__ocml_isinf_f32(float noundef %60) #8
+  %tobool77 = icmp ne i32 %call76, 0
+  %61 = zext i1 %tobool77 to i64
+  %cond78 = select i1 %tobool77, i32 1, i32 0
+  %conv79 = sitofp i32 %cond78 to float
+  %62 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %call80 = call float @__ocml_copysign_f32(float noundef %conv79, float noundef %62) #8
+  store float %call80, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %63 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %call81 = call i32 @__ocml_isinf_f32(float noundef %63) #8
+  %tobool82 = icmp ne i32 %call81, 0
+  %64 = zext i1 %tobool82 to i64
+  %cond83 = select i1 %tobool82, i32 1, i32 0
+  %conv84 = sitofp i32 %cond83 to float
+  %65 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %call85 = call float @__ocml_copysign_f32(float noundef %conv84, float noundef %65) #8
+  store float %call85, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %66 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %67 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %68 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %69 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %mul87 = fmul float %68, %69
+  %70 = call float @llvm.fmuladd.f32(float %66, float %67, float %mul87)
+  %mul88 = fmul float 0.000000e+00, %70
+  %z.ascast.realp89 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 0
+  store float %mul88, ptr %z.ascast.realp89, align 4, !tbaa !20
+  %71 = load float, ptr %__b.addr.ascast, align 4, !tbaa !20
+  %72 = load float, ptr %__c.addr.ascast, align 4, !tbaa !20
+  %73 = load float, ptr %__a.addr.ascast, align 4, !tbaa !20
+  %74 = load float, ptr %__d.addr.ascast, align 4, !tbaa !20
+  %mul91 = fmul float %73, %74
+  %neg92 = fneg float %mul91
+  %75 = call float @llvm.fmuladd.f32(float %71, float %72, float %neg92)
+  %mul93 = fmul float 0.000000e+00, %75
+  %z.ascast.imagp94 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 1
+  store float %mul93, ptr %z.ascast.imagp94, align 4, !tbaa !20
+  br label %if.end95
+
+if.end95:                                         ; preds = %if.then75, %land.lhs.true72, %land.lhs.true69, %land.lhs.true67, %if.else64
+  br label %if.end96
+
+if.end96:                                         ; preds = %if.end95, %if.then45
+  br label %if.end97
+
+if.end97:                                         ; preds = %if.end96, %if.then28
+  br label %if.end98
+
+if.end98:                                         ; preds = %if.end97, %land.lhs.true, %if.end
+  %z.ascast.realp99 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 0
+  %z.ascast.real = load float, ptr %z.ascast.realp99, align 4
+  %z.ascast.imagp100 = getelementptr inbounds nuw { float, float }, ptr %z.ascast, i32 0, i32 1
+  %z.ascast.imag = load float, ptr %z.ascast.imagp100, align 4
+  %retval.ascast.realp = getelementptr inbounds nuw { float, float }, ptr %retval.ascast, i32 0, i32 0
+  %retval.ascast.imagp = getelementptr inbounds nuw { float, float }, ptr %retval.ascast, i32 0, i32 1
+  store float %z.ascast.real, ptr %retval.ascast.realp, align 4
+  store float %z.ascast.imag, ptr %retval.ascast.imagp, align 4
+  call void @llvm.lifetime.end.p5(i64 8, ptr addrspace(5) %z) #7
+  call void @llvm.lifetime.end.p5(i64 4, ptr addrspace(5) %__denom) #7
+  call void @llvm.lifetime.end.p5(i64 4, ptr addrspace(5) %__logbw) #7
+  call void @llvm.lifetime.end.p5(i64 4, ptr addrspace(5) %__ilogbw) #7
+  %76 = load [2 x i32], ptr %retval.ascast, align 4
+  ret [2 x i32] %76
+}
+
+; Function Attrs: convergent mustprogress nounwind
+define hidden noundef double @_ZNK6openmc14Function1DFlatclEd(ptr noundef nonnull align 8 dereferenceable(8) %this, double noundef %x) #3 align 2 {
+entry:
+  %retval = alloca double, align 8, addrspace(5)
+  %this.addr = alloca ptr, align 8, addrspace(5)
+  %x.addr = alloca double, align 8, addrspace(5)
+  %dist = alloca %"class.openmc::Tabulated1DFlat", align 8, addrspace(5)
+  %cleanup.dest.slot = alloca i32, align 4, addrspace(5)
+  %dist4 = alloca %"class.openmc::PolynomialFlat", align 8, addrspace(5)
+  %cleanup.dest.slot7 = alloca i32, align 4, addrspace(5)
+  %dist9 = alloca %"class.openmc::CoherentElasticXSFlat", align 8, addrspace(5)
+  %cleanup.dest.slot12 = alloca i32, align 4, addrspace(5)
+  %dist14 = alloca %"class.openmc::IncoherentElasticXSFlat", align 8, addrspace(5)
+  %cleanup.dest.slot17 = alloca i32, align 4, addrspace(5)
+  %retval.ascast = addrspacecast ptr addrspace(5) %retval to ptr
+  %this.addr.ascast = addrspacecast ptr addrspace(5) %this.addr to ptr
+  %x.addr.ascast = addrspacecast ptr addrspace(5) %x.addr to ptr
+  %dist.ascast = addrspacecast ptr addrspace(5) %dist to ptr
+  %dist4.ascast = addrspacecast ptr addrspace(5) %dist4 to ptr
+  %dist9.ascast = addrspacecast ptr addrspace(5) %dist9 to ptr
+  %dist14.ascast = addrspacecast ptr addrspace(5) %dist14 to ptr
+  store ptr %this, ptr %this.addr.ascast, align 8, !tbaa !22
+  store double %x, ptr %x.addr.ascast, align 8, !tbaa !14
+  %this1 = load ptr, ptr %this.addr.ascast, align 8
+  %call = call noundef i32 @_ZNK6openmc14Function1DFlat4typeEv(ptr noundef nonnull align 8 dereferenceable(8) %this1) #9
+  switch i32 %call, label %sw.default [
+    i32 1, label %sw.bb
+    i32 0, label %sw.bb3
+    i32 2, label %sw.bb8
+    i32 3, label %sw.bb13
+  ]
+
+sw.bb:                                            ; preds = %entry
+  call void @llvm.lifetime.start.p5(i64 24, ptr addrspace(5) %dist) #7
+  %data_ = getelementptr inbounds nuw %"class.openmc::Function1DFlat", ptr %this1, i32 0, i32 0
+  %0 = load ptr, ptr %data_, align 8, !tbaa !25
+  call void @_ZN6openmc15Tabulated1DFlatC1EPKh(ptr noundef nonnull align 8 dereferenceable(24) %dist.ascast, ptr noundef %0) #9
+  %1 = load double, ptr %x.addr.ascast, align 8, !tbaa !14
+  %call2 = call noundef double @_ZNK6openmc15Tabulated1DFlatclEd(ptr noundef nonnull align 8 dereferenceable(24) %dist.ascast, double noundef %1) #9
+  store double %call2, ptr %retval.ascast, align 8
+  call void @llvm.lifetime.end.p5(i64 24, ptr addrspace(5) %dist) #7
+  br label %return
+
+sw.bb3:                                           ; preds = %entry
+  call void @llvm.lifetime.start.p5(i64 8, ptr addrspace(5) %dist4) #7
+  %data_5 = getelementptr inbounds nuw %"class.openmc::Function1DFlat", ptr %this1, i32 0, i32 0
+  %2 = load ptr, ptr %data_5, align 8, !tbaa !25
+  call void @_ZN6openmc14PolynomialFlatC2EPKh(ptr noundef nonnull align 8 dereferenceable(8) %dist4.ascast, ptr noundef %2) #9
+  %3 = load double, ptr %x.addr.ascast, align 8, !tbaa !14
+  %call6 = call noundef double @_ZNK6openmc14PolynomialFlatclEd(ptr noundef nonnull align 8 dereferenceable(8) %dist4.ascast, double noundef %3) #9
+  store double %call6, ptr %retval.ascast, align 8
+  call void @llvm.lifetime.end.p5(i64 8, ptr addrspace(5) %dist4) #7
+  br label %return
+
+sw.bb8:                                           ; preds = %entry
+  call void @llvm.lifetime.start.p5(i64 8, ptr addrspace(5) %dist9) #7
+  %data_10 = getelementptr inbounds nuw %"class.openmc::Function1DFlat", ptr %this1, i32 0, i32 0
+  %4 = load ptr, ptr %data_10, align 8, !tbaa !25
+  call void @_ZN6openmc21CoherentElasticXSFlatC2EPKh(ptr noundef nonnull align 8 dereferenceable(8) %dist9.ascast, ptr noundef %4) #9
+  %5 = load double, ptr %x.addr.ascast, align 8, !tbaa !14
+  %call11 = call noundef double @_ZNK6openmc21CoherentElasticXSFlatclEd(ptr noundef nonnull align 8 dereferenceable(8) %dist9.ascast, double noundef %5) #9
+  store double %call11, ptr %retval.ascast, align 8
+  call void @llvm.lifetime.end.p5(i64 8, ptr addrspace(5) %dist9) #7
+  br label %return
+
+sw.bb13:                                          ; preds = %entry
+  call void @llvm.lifetime.start.p5(i64 8, ptr addrspace(5) %dist14) #7
+  %data_15 = getelementptr inbounds nuw %"class.openmc::Function1DFlat", ptr %this1, i32 0, i32 0
+  %6 = load ptr, ptr %data_15, align 8, !tbaa !25
+  call void @_ZN6openmc23IncoherentElasticXSFlatC2EPKh(ptr noundef nonnull align 8 dereferenceable(8) %dist14.ascast, ptr noundef %6) #9
+  %7 = load double, ptr %x.addr.ascast, align 8, !tbaa !14
+  %call16 = call noundef double @_ZNK6openmc23IncoherentElasticXSFlatclEd(ptr noundef nonnull align 8 dereferenceable(8) %dist14.ascast, double noundef %7) #9
+  store double %call16, ptr %retval.ascast, align 8
+  call void @llvm.lifetime.end.p5(i64 8, ptr addrspace(5) %dist14) #7
+  br label %return
+
+sw.default:                                       ; preds = %entry
+  unreachable
+
+return:                                           ; preds = %sw.bb13, %sw.bb8, %sw.bb3, %sw.bb
+  %8 = load double, ptr %retval.ascast, align 8
+  ret double %8
+}
+
+; Function Attrs: convergent mustprogress nounwind
+define hidden noundef i32 @_ZNK6openmc14Function1DFlat4typeEv(ptr noundef nonnull align 8 dereferenceable(8) %this) #3 align 2 {
+entry:
+  %retval = alloca i32, align 4, addrspace(5)
+  %this.addr = alloca ptr, align 8, addrspace(5)
+  %value = alloca i32, align 4, addrspace(5)
+  %cleanup.dest.slot = alloca i32, align 4, addrspace(5)
+  %retval.ascast = addrspacecast ptr addrspace(5) %retval to ptr
+  %this.addr.ascast = addrspacecast ptr addrspace(5) %this.addr to ptr
+  %value.ascast = addrspacecast ptr addrspace(5) %value to ptr
+  store ptr %this, ptr %this.addr.ascast, align 8, !tbaa !22
+  %this1 = load ptr, ptr %this.addr.ascast, align 8
+  call void @llvm.lifetime.start.p5(i64 4, ptr addrspace(5) %value) #7
+  %data_ = getelementptr inbounds nuw %"class.openmc::Function1DFlat", ptr %this1, i32 0, i32 0
+  %0 = load ptr, ptr %data_, align 8, !tbaa !25
+  %1 = load i32, ptr %0, align 4, !tbaa !18
+  store i32 %1, ptr %value.ascast, align 4, !tbaa !18
+  %2 = load i32, ptr %value.ascast, align 4, !tbaa !18
+  call void @llvm.lifetime.end.p5(i64 4, ptr addrspace(5) %value) #7
+  ret i32 %2
+}
+
+; Function Attrs: convergent
+declare void @_ZN6openmc15Tabulated1DFlatC1EPKh(ptr noundef nonnull align 8 dereferenceable(24), ptr noundef) unnamed_addr #4
+
+; Function Attrs: convergent
+declare noundef double @_ZNK6openmc15Tabulated1DFlatclEd(ptr noundef nonnull align 8 dereferenceable(24), double noundef) #4
+
+; Function Attrs: convergent mustprogress nounwind
+define linkonce_odr hidden void @_ZN6openmc14PolynomialFlatC2EPKh(ptr noundef nonnull align 8 dereferenceable(8) %this, ptr noundef %data) unnamed_addr #3 comdat align 2 {
+entry:
+  %this.addr = alloca ptr, align 8, addrspace(5)
+  %data.addr = alloca ptr, align 8, addrspace(5)
+  %this.addr.ascast = addrspacecast ptr addrspace(5) %this.addr to ptr
+  %data.addr.ascast = addrspacecast ptr addrspace(5) %data.addr to ptr
+  store ptr %this, ptr %this.addr.ascast, align 8, !tbaa !28
+  store ptr %data, ptr %data.addr.ascast, align 8, !tbaa !30
+  %this1 = load ptr, ptr %this.addr.ascast, align 8
+  %data_ = getelementptr inbounds nuw %"class.openmc::PolynomialFlat", ptr %this1, i32 0, i32 0
+  %0 = load ptr, ptr %data.addr.ascast, align 8, !tbaa !30
+  store ptr %0, ptr %data_, align 8, !tbaa !31
+  ret void
+}
+
+; Function Attrs: convergent
+declare noundef double @_ZNK6openmc14PolynomialFlatclEd(ptr noundef nonnull align 8 dereferenceable(8), double noundef) #4
+
+; Function Attrs: convergent mustprogress nounwind
+define linkonce_odr hidden void @_ZN6openmc21CoherentElasticXSFlatC2EPKh(ptr noundef nonnull align 8 dereferenceable(8) %this, ptr noundef %data) unnamed_addr #3 comdat align 2 {
+entry:
+  %this.addr = alloca ptr, align 8, addrspace(5)
+  %data.addr = alloca ptr, align 8, addrspace(5)
+  %this.addr.ascast = addrspacecast ptr addrspace(5) %this.addr to ptr
+  %data.addr.ascast = addrspacecast ptr addrspace(5) %data.addr to ptr
+  store ptr %this, ptr %this.addr.ascast, align 8, !tbaa !33
+  store ptr %data, ptr %data.addr.ascast, align 8, !tbaa !30
+  %this1 = load ptr, ptr %this.addr.ascast, align 8
+  %data_ = getelementptr inbounds nuw %"class.openmc::CoherentElasticXSFlat", ptr %this1, i32 0, i32 0
+  %0 = load ptr, ptr %data.addr.ascast, align 8, !tbaa !30
+  store ptr %0, ptr %data_, align 8, !tbaa !35
+  ret void
+}
+
+; Function Attrs: convergent
+declare noundef double @_ZNK6openmc21CoherentElasticXSFlatclEd(ptr noundef nonnull align 8 dereferenceable(8), double noundef) #4
+
+; Function Attrs: convergent mustprogress nounwind
+define linkonce_odr hidden void @_ZN6openmc23IncoherentElasticXSFlatC2EPKh(ptr noundef nonnull align 8 dereferenceable(8) %this, ptr noundef %data) unnamed_addr #3 comdat align 2 {
+entry:
+  %this.addr = alloca ptr, align 8, addrspace(5)
+  %data.addr = alloca ptr, align 8, addrspace(5)
+  %this.addr.ascast = addrspacecast ptr addrspace(5) %this.addr to ptr
+  %data.addr.ascast = addrspacecast ptr addrspace(5) %data.addr to ptr
+  store ptr %this, ptr %this.addr.ascast, align 8, !tbaa !37
+  store ptr %data, ptr %data.addr.ascast, align 8, !tbaa !30
+  %this1 = load ptr, ptr %this.addr.ascast, align 8
+  %data_ = getelementptr inbounds nuw %"class.openmc::IncoherentElasticXSFlat", ptr %this1, i32 0, i32 0
+  %0 = load ptr, ptr %data.addr.ascast, align 8, !tbaa !30
+  store ptr %0, ptr %data_, align 8, !tbaa !39
+  ret void
+}
+
+; Function Attrs: convergent
+declare noundef double @_ZNK6openmc23IncoherentElasticXSFlatclEd(ptr noundef nonnull align 8 dereferenceable(8), double noundef) #4
+
+; Function Attrs: convergent mustprogress nounwind
+define hidden noundef double @_ZNK6openmc23Function1DFlatContainerclEd(ptr noundef nonnull align 8 dereferenceable(32) %this, double noundef %x) #3 align 2 {
+entry:
+  %retval = alloca double, align 8, addrspace(5)
+  %this.addr = alloca ptr, align 8, addrspace(5)
+  %x.addr = alloca double, align 8, addrspace(5)
+  %ref.tmp = alloca %"class.openmc::Function1DFlat", align 8, addrspace(5)
+  %retval.ascast = addrspacecast ptr addrspace(5) %retval to ptr
+  %this.addr.ascast = addrspacecast ptr addrspace(5) %this.addr to ptr
+  %x.addr.ascast = addrspacecast ptr addrspace(5) %x.addr to ptr
+  %ref.tmp.ascast = addrspacecast ptr addrspace(5) %ref.tmp to ptr
+  store ptr %this, ptr %this.addr.ascast, align 8, !tbaa !41
+  store double %x, ptr %x.addr.ascast, align 8, !tbaa !14
+  %this1 = load ptr, ptr %this.addr.ascast, align 8
+  call void @llvm.lifetime.start.p5(i64 8, ptr addrspace(5) %ref.tmp) #7
+  %call = call ptr @_ZNK6openmc23Function1DFlatContainer4funcEv(ptr noundef nonnull align 8 dereferenceable(32) %this1) #9
+  %coerce.dive = getelementptr inbounds nuw %"class.openmc::Function1DFlat", ptr %ref.tmp.ascast, i32 0, i32 0
+  store ptr %call, ptr %coerce.dive, align 8
+  %0 = load double, ptr %x.addr.ascast, align 8, !tbaa !14
+  %call2 = call noundef double @_ZNK6openmc14Function1DFlatclEd(ptr noundef nonnull align 8 dereferenceable(8) %ref.tmp.ascast, double noundef %0) #9
+  call void @llvm.lifetime.end.p5(i64 8, ptr addrspace(5) %ref.tmp) #7
+  ret double %call2
+}
+
+; Function Attrs: convergent mustprogress nounwind
+define linkonce_odr hidden ptr @_ZNK6openmc23Function1DFlatContainer4funcEv(ptr noundef nonnull align 8 dereferenceable(32) %this) #3 comdat align 2 {
+entry:
+  %retval = alloca %"class.openmc::Function1DFlat", align 8, addrspace(5)
+  %this.addr = alloca ptr, align 8, addrspace(5)
+  %retval.ascast = addrspacecast ptr addrspace(5) %retval to ptr
+  %this.addr.ascast = addrspacecast ptr addrspace(5) %this.addr to ptr
+  store ptr %this, ptr %this.addr.ascast, align 8, !tbaa !41
+  %this1 = load ptr, ptr %this.addr.ascast, align 8
+  %buffer_ = getelementptr inbounds nuw %"class.openmc::Function1DFlatContainer", ptr %this1, i32 0, i32 0
+  %data_ = getelementptr inbounds nuw %"class.openmc::DataBuffer", ptr %buffer_, i32 0, i32 0
+  %0 = load ptr, ptr %data_, align 8, !tbaa !43
+  call void @_ZN6openmc14Function1DFlatC2EPKh(ptr noundef nonnull align 8 dereferenceable(8) %retval.ascast, ptr noundef %0) #9
+  %coerce.dive = getelementptr inbounds nuw %"class.openmc::Function1DFlat", ptr %retval.ascast, i32 0, i32 0
+  %1 = load ptr, ptr %coerce.dive, align 8
+  ret ptr %1
+}
+
+; Function Attrs: convergent mustprogress nounwind
+define linkonce_odr hidden void @_ZN6openmc14Function1DFlatC2EPKh(ptr noundef nonnull align 8 dereferenceable(8) %this, ptr noundef %data) unnamed_addr #3 comdat align 2 {
+entry:
+  %this.addr = alloca ptr, align 8, addrspace(5)
+  %data.addr = alloca ptr, align 8, addrspace(5)
+  %this.addr.ascast = addrspacecast ptr addrspace(5) %this.addr to ptr
+  %data.addr.ascast = addrspacecast ptr addrspace(5) %data.addr to ptr
+  store ptr %this, ptr %this.addr.ascast, align 8, !tbaa !22
+  store ptr %data, ptr %data.addr.ascast, align 8, !tbaa !30
+  %this1 = load ptr, ptr %this.addr.ascast, align 8
+  %data_ = getelementptr inbounds nuw %"class.openmc::Function1DFlat", ptr %this1, i32 0, i32 0
+  %0 = load ptr, ptr %data.addr.ascast, align 8, !tbaa !30
+  store ptr %0, ptr %data_, align 8, !tbaa !25
+  ret void
+}
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef double @__ocml_copysign_f64(double noundef %0, double noundef %1) #5 {
+  %3 = tail call double @llvm.copysign.f64(double %0, double %1)
+  ret double %3
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.copysign.f64(double, double) #2
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef float @__ocml_copysign_f32(float noundef %0, float noundef %1) #5 {
+  %3 = tail call float @llvm.copysign.f32(float %0, float %1)
+  ret float %3
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.copysign.f32(float, float) #2
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef double @__ocml_fabs_f64(double noundef %0) #5 {
+  %2 = tail call double @llvm.fabs.f64(double %0)
+  ret double %2
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.fabs.f64(double) #2
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef float @__ocml_fabs_f32(float noundef %0) #5 {
+  %2 = tail call float @llvm.fabs.f32(float %0)
+  ret float %2
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.fabs.f32(float) #2
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef double @__ocml_fmax_f64(double noundef %0, double noundef %1) #5 {
+  %3 = tail call double @llvm.maxnum.f64(double %0, double %1)
+  ret double %3
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.maxnum.f64(double, double) #2
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef float @__ocml_fmax_f32(float noundef %0, float noundef %1) #5 {
+  %3 = tail call float @llvm.maxnum.f32(float %0, float %1)
+  ret float %3
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.maxnum.f32(float, float) #2
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef i32 @__ocml_isfinite_f64(double noundef %0) #5 {
+  %2 = tail call double @llvm.fabs.f64(double %0)
+  %3 = fcmp one double %2, 0x7FF0000000000000
+  %4 = zext i1 %3 to i32
+  ret i32 %4
+}
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef i32 @__ocml_isfinite_f32(float noundef %0) #5 {
+  %2 = tail call float @llvm.fabs.f32(float %0)
+  %3 = fcmp one float %2, 0x7FF0000000000000
+  %4 = zext i1 %3 to i32
+  ret i32 %4
+}
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef i32 @__ocml_isinf_f64(double noundef %0) #5 {
+  %2 = tail call double @llvm.fabs.f64(double %0)
+  %3 = fcmp oeq double %2, 0x7FF0000000000000
+  %4 = zext i1 %3 to i32
+  ret i32 %4
+}
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef i32 @__ocml_isinf_f32(float noundef %0) #5 {
+  %2 = tail call float @llvm.fabs.f32(float %0)
+  %3 = fcmp oeq float %2, 0x7FF0000000000000
+  %4 = zext i1 %3 to i32
+  ret i32 %4
+}
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef i32 @__ocml_isnan_f64(double noundef %0) #5 {
+  %2 = fcmp uno double %0, 0.000000e+00
+  %3 = zext i1 %2 to i32
+  ret i32 %3
+}
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef i32 @__ocml_isnan_f32(float noundef %0) #5 {
+  %2 = fcmp uno float %0, 0.000000e+00
+  %3 = zext i1 %2 to i32
+  ret i32 %3
+}
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal double @__ocml_logb_f64(double noundef %0) #5 {
+  %2 = tail call i32 @llvm.amdgcn.frexp.exp.i32.f64(double %0)
+  %3 = add nsw i32 %2, -1
+  %4 = sitofp i32 %3 to double
+  %5 = load i8, ptr addrspace(4) @__oclc_finite_only_opt, align 1, !tbaa !48, !range !52, !noundef !53
+  %6 = icmp eq i8 %5, 0
+  %7 = tail call double @llvm.fabs.f64(double %0)
+  %8 = fcmp one double %7, 0x7FF0000000000000
+  %9 = select i1 %8, double %4, double %7
+  %10 = fcmp oeq double %0, 0.000000e+00
+  %11 = select i1 %10, double 0xFFF0000000000000, double %9
+  %12 = select i1 %6, double %11, double %4
+  ret double %12
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.amdgcn.frexp.exp.i32.f64(double) #2
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal float @__ocml_logb_f32(float noundef %0) #5 {
+  %2 = tail call i32 @llvm.amdgcn.frexp.exp.i32.f32(float %0)
+  %3 = add nsw i32 %2, -1
+  %4 = sitofp i32 %3 to float
+  %5 = load i8, ptr addrspace(4) @__oclc_finite_only_opt, align 1, !tbaa !48, !range !52, !noundef !53
+  %6 = icmp eq i8 %5, 0
+  %7 = tail call float @llvm.fabs.f32(float %0)
+  %8 = fcmp one float %7, 0x7FF0000000000000
+  %9 = select i1 %8, float %4, float %7
+  %10 = fcmp oeq float %0, 0.000000e+00
+  %11 = select i1 %10, float 0xFFF0000000000000, float %9
+  %12 = select i1 %6, float %11, float %4
+  ret float %12
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.amdgcn.frexp.exp.i32.f32(float) #2
+
+; Function Attrs: convergent mustprogress nofree norecurse nounwind willreturn memory(none)
+define internal double @__ocml_scalbn_f64(double noundef %0, i32 noundef %1) #6 {
+  %3 = tail call double @__ocml_ldexp_f64(double noundef %0, i32 noundef %1) #8
+  ret double %3
+}
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef double @__ocml_ldexp_f64(double noundef %0, i32 noundef %1) local_unnamed_addr #5 {
+  %3 = tail call double @llvm.ldexp.f64.i32(double %0, i32 %1)
+  ret double %3
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.ldexp.f64.i32(double, i32) #2
+
+; Function Attrs: convergent mustprogress nofree norecurse nounwind willreturn memory(none)
+define internal float @__ocml_scalbn_f32(float noundef %0, i32 noundef %1) #6 {
+  %3 = tail call float @__ocml_ldexp_f32(float noundef %0, i32 noundef %1) #8
+  ret float %3
+}
+
+; Function Attrs: convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none)
+define internal noundef float @__ocml_ldexp_f32(float noundef %0, i32 noundef %1) local_unnamed_addr #5 {
+  %3 = tail call float @llvm.ldexp.f32.i32(float %0, i32 %1)
+  ret float %3
+}
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.ldexp.f32.i32(float, i32) #2
+
+attributes #0 = { cold convergent mustprogress noinline nounwind optsize "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="gfx942" "target-features"="+16-bit-insts,+atomic-buffer-global-pk-add-f16-insts,+atomic-ds-pk-add-16-insts,+atomic-fadd-rtn-insts,+atomic-flat-pk-add-16-insts,+atomic-global-pk-add-bf16-inst,+ci-insts,+dl-insts,+dot1-insts,+dot10-insts,+dot2-insts,+dot3-insts,+dot4-insts,+dot5-insts,+dot6-insts,+dot7-insts,+dpp,+fp8-conversion-insts,+fp8-insts,+gfx8-insts,+gfx9-insts,+gfx90a-insts,+gfx940-insts,+mai-insts,+s-memrealtime,+s-memtime-inst,+wavefrontsize64,+xf32-insts" }
+attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #2 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #3 = { convergent mustprogress nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="gfx942" "target-features"="+16-bit-insts,+atomic-buffer-global-pk-add-f16-insts,+atomic-ds-pk-add-16-insts,+atomic-fadd-rtn-insts,+atomic-flat-pk-add-16-insts,+atomic-global-pk-add-bf16-inst,+ci-insts,+dl-insts,+dot1-insts,+dot10-insts,+dot2-insts,+dot3-insts,+dot4-insts,+dot5-insts,+dot6-insts,+dot7-insts,+dpp,+fp8-conversion-insts,+fp8-insts,+gfx8-insts,+gfx9-insts,+gfx90a-insts,+gfx940-insts,+mai-insts,+s-memrealtime,+s-memtime-inst,+wavefrontsize64,+xf32-insts" }
+attributes #4 = { convergent "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="gfx942" "target-features"="+16-bit-insts,+atomic-buffer-global-pk-add-f16-insts,+atomic-ds-pk-add-16-insts,+atomic-fadd-rtn-insts,+atomic-flat-pk-add-16-insts,+atomic-global-pk-add-bf16-inst,+ci-insts,+dl-insts,+dot1-insts,+dot10-insts,+dot2-insts,+dot3-insts,+dot4-insts,+dot5-insts,+dot6-insts,+dot7-insts,+dpp,+fp8-conversion-insts,+fp8-insts,+gfx8-insts,+gfx9-insts,+gfx90a-insts,+gfx940-insts,+mai-insts,+s-memrealtime,+s-memtime-inst,+wavefrontsize64,+xf32-insts" }
+attributes #5 = { convergent mustprogress nofree norecurse nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="gfx942" "target-features"="+16-bit-insts,+atomic-buffer-global-pk-add-f16-insts,+atomic-ds-pk-add-16-insts,+atomic-fadd-rtn-insts,+atomic-flat-pk-add-16-insts,+atomic-global-pk-add-bf16-inst,+ci-insts,+dl-insts,+dot1-insts,+dot10-insts,+dot2-insts,+dot3-insts,+dot4-insts,+dot5-insts,+dot6-insts,+dot7-insts,+dpp,+fp8-conversion-insts,+fp8-insts,+gfx8-insts,+gfx9-insts,+gfx90a-insts,+gfx940-insts,+gws,+mai-insts,+s-memrealtime,+s-memtime-inst,+vmem-to-lds-load-insts,+wavefrontsize64,+xf32-insts" }
+attributes #6 = { convergent mustprogress nofree norecurse nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="gfx942" "target-features"="+16-bit-insts,+atomic-buffer-global-pk-add-f16-insts,+atomic-ds-pk-add-16-insts,+atomic-fadd-rtn-insts,+atomic-flat-pk-add-16-insts,+atomic-global-pk-add-bf16-inst,+ci-insts,+dl-insts,+dot1-insts,+dot10-insts,+dot2-insts,+dot3-insts,+dot4-insts,+dot5-insts,+dot6-insts,+dot7-insts,+dpp,+fp8-conversion-insts,+fp8-insts,+gfx8-insts,+gfx9-insts,+gfx90a-insts,+gfx940-insts,+gws,+mai-insts,+s-memrealtime,+s-memtime-inst,+vmem-to-lds-load-insts,+wavefrontsize64,+xf32-insts" }
+attributes #7 = { nounwind }
+attributes #8 = { convergent nounwind willreturn memory(none) }
+attributes #9 = { convergent }
+
+!omp_offload.info = !{!0, !1, !2, !3, !4, !5}
+!llvm.module.flags = !{!6, !7, !8, !9, !10}
+!llvm.ident = !{!11, !12, !12, !12, !12, !12, !12, !12, !12}
+!opencl.ocl.version = !{!13, !13, !13, !13, !13, !13, !13, !13}
+
+!0 = !{i32 1, !"dagmc", i32 0, i32 0}
+!1 = !{i32 1, !"n_particles", i32 0, i32 4}
+!2 = !{i32 1, !"max_lost_particles", i32 0, i32 2}
+!3 = !{i32 1, !"run_CE", i32 0, i32 1}
+!4 = !{i32 1, !"_ZN6openmcL12DEPLETION_RXE", i32 0, i32 5}
+!5 = !{i32 1, !"gen_per_batch", i32 0, i32 3}
+!6 = !{i32 1, !"amdhsa_code_object_version", i32 600}
+!7 = !{i32 1, !"wchar_size", i32 4}
+!8 = !{i32 7, !"openmp", i32 51}
+!9 = !{i32 7, !"openmp-device", i32 51}
+!10 = !{i32 8, !"PIC Level", i32 2}
+!11 = !{!"clang version 21.0.0git (https://github.com/llvm/llvm-project.git da17ced11b1cf44b433cb2b850978df4b6bff279)"}
+!12 = !{!"AMD clang version 18.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-6.3.1 24491 1e0fda770a2079fbd71e4b70974d74f62fd3af10)"}
+!13 = !{i32 2, i32 0}
+!14 = !{!15, !15, i64 0}
+!15 = !{!"double", !16, i64 0}
+!16 = !{!"omnipotent char", !17, i64 0}
+!17 = !{!"Simple C++ TBAA"}
+!18 = !{!19, !19, i64 0}
+!19 = !{!"int", !16, i64 0}
+!20 = !{!21, !21, i64 0}
+!21 = !{!"float", !16, i64 0}
+!22 = !{!23, !23, i64 0}
+!23 = !{!"p1 _ZTSN6openmc14Function1DFlatE", !24, i64 0}
+!24 = !{!"any pointer", !16, i64 0}
+!25 = !{!26, !27, i64 0}
+!26 = !{!"_ZTSN6openmc14Function1DFlatE", !27, i64 0}
+!27 = !{!"p1 omnipotent char", !24, i64 0}
+!28 = !{!29, !29, i64 0}
+!29 = !{!"p1 _ZTSN6openmc14PolynomialFlatE", !24, i64 0}
+!30 = !{!27, !27, i64 0}
+!31 = !{!32, !27, i64 0}
+!32 = !{!"_ZTSN6openmc14PolynomialFlatE", !27, i64 0}
+!33 = !{!34, !34, i64 0}
+!34 = !{!"p1 _ZTSN6openmc21CoherentElasticXSFlatE", !24, i64 0}
+!35 = !{!36, !27, i64 0}
+!36 = !{!"_ZTSN6openmc21CoherentElasticXSFlatE", !27, i64 0}
+!37 = !{!38, !38, i64 0}
+!38 = !{!"p1 _ZTSN6openmc23IncoherentElasticXSFlatE", !24, i64 0}
+!39 = !{!40, !27, i64 0}
+!40 = !{!"_ZTSN6openmc23IncoherentElasticXSFlatE", !27, i64 0}
+!41 = !{!42, !42, i64 0}
+!42 = !{!"p1 _ZTSN6openmc23Function1DFlatContainerE", !24, i64 0}
+!43 = !{!44, !27, i64 0}
+!44 = !{!"_ZTSN6openmc23Function1DFlatContainerE", !45, i64 0}
+!45 = !{!"_ZTSN6openmc10DataBufferE", !27, i64 0, !46, i64 8, !46, i64 16, !47, i64 24}
+!46 = !{!"long", !16, i64 0}
+!47 = !{!"_ZTSN6openmc10DataBuffer4ModeE", !16, i64 0}
+!48 = !{!49, !49, i64 0}
+!49 = !{!"bool", !50, i64 0}
+!50 = !{!"omnipotent char", !51, i64 0}
+!51 = !{!"Simple C/C++ TBAA"}
+!52 = !{i8 0, i8 2}
+!53 = !{}

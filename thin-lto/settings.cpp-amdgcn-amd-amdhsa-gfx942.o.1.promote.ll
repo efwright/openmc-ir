@@ -1,0 +1,124 @@
+; ModuleID = 'settings.cpp-amdgcn-amd-amdhsa-gfx942.o.1.promote.bc'
+source_filename = "/g/g0/wright117/workspace/openmc/openmc-omp/openmc/src/settings.cpp"
+target datalayout = "e-p:64:64-p1:64:64-p2:32:32-p3:32:32-p4:64:64-p5:32:32-p6:32:32-p7:160:256:256:32-p8:128:128-p9:192:256:256:32-i64:64-v16:16-v24:32-v32:32-v48:64-v96:128-v192:256-v256:256-v512:512-v1024:1024-v2048:2048-n32:64-S32-A5-G1-ni:7:8:9"
+target triple = "amdgcn-amd-amdhsa"
+
+%"struct.std::array" = type { [6 x i32] }
+%"struct.std::array.0" = type { [4 x double] }
+
+@__omp_rtl_debug_kind = available_externally hidden local_unnamed_addr addrspace(1) constant i32 0
+@__omp_rtl_assume_no_thread_state = available_externally hidden local_unnamed_addr addrspace(1) constant i32 0
+@__omp_rtl_assume_no_nested_parallelism = available_externally hidden local_unnamed_addr addrspace(1) constant i32 0
+@dagmc = protected local_unnamed_addr addrspace(1) global i8 0, align 1
+@run_CE = protected local_unnamed_addr addrspace(1) global i8 1, align 1
+@max_lost_particles = protected local_unnamed_addr addrspace(1) global i32 10, align 4
+@gen_per_batch = protected local_unnamed_addr addrspace(1) global i32 1, align 4
+@n_particles = protected local_unnamed_addr addrspace(1) global i64 -1, align 8
+@_ZN6openmcL12DEPLETION_RXE = internal addrspace(1) constant %"struct.std::array" { [6 x i32] [i32 102, i32 103, i32 107, i32 16, i32 17, i32 37] }, align 4
+@"__ZN6openmcL12DEPLETION_RXE$ref" = internal constant ptr addrspace(1) @_ZN6openmcL12DEPLETION_RXE, align 8
+@_ZN6openmc8settings15assume_separateE = protected local_unnamed_addr addrspace(1) global i8 0, align 1
+@_ZN6openmc8settings14check_overlapsE = protected local_unnamed_addr addrspace(1) global i8 0, align 1
+@_ZN6openmc8settings23create_fission_neutronsE = protected local_unnamed_addr addrspace(1) global i8 1, align 1
+@_ZN6openmc8settings16survival_biasingE = protected local_unnamed_addr addrspace(1) global i8 0, align 1
+@_ZN6openmc8settings14urr_ptables_onE = protected local_unnamed_addr addrspace(1) global i8 1, align 1
+@_ZN6openmc8settings22rel_max_lost_particlesE = protected local_unnamed_addr addrspace(1) global double 0x3EB0C6F7A0B5ED8D, align 8
+@_ZN6openmc8settings18electron_treatmentE = protected local_unnamed_addr addrspace(1) global i32 1, align 4
+@_ZN6openmc8settings13energy_cutoffE = protected local_unnamed_addr addrspace(1) global %"struct.std::array.0" { [4 x double] [double 0.000000e+00, double 1.000000e+03, double 0.000000e+00, double 0.000000e+00] }, align 8
+@_ZN6openmc8settings10n_log_binsE = protected local_unnamed_addr addrspace(1) global i32 -1, align 4
+@_ZN6openmc8settings15res_scat_methodE = protected local_unnamed_addr addrspace(1) global i32 0, align 4
+@_ZN6openmc8settings19res_scat_energy_minE = protected local_unnamed_addr addrspace(1) global double 1.000000e-02, align 8
+@_ZN6openmc8settings19res_scat_energy_maxE = protected local_unnamed_addr addrspace(1) global double 1.000000e+03, align 8
+@_ZN6openmc8settings8run_modeE = protected local_unnamed_addr addrspace(1) global i32 0, align 4
+@_ZN6openmc8settings18temperature_methodE = protected local_unnamed_addr addrspace(1) global i32 0, align 4
+@_ZN6openmc8settings13weight_cutoffE = protected local_unnamed_addr addrspace(1) global double 2.500000e-01, align 8
+@_ZN6openmc8settings14weight_surviveE = protected local_unnamed_addr addrspace(1) global double 1.000000e+00, align 8
+@llvm.compiler.used = appending addrspace(1) global [1 x ptr] [ptr @"__ZN6openmcL12DEPLETION_RXE$ref"], section "llvm.metadata"
+
+; Function Attrs: cold mustprogress noinline nounwind optsize
+declare hidden { double, double } @__muldc3(double noundef, double noundef, double noundef, double noundef) local_unnamed_addr #0
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.fmuladd.f64(double, double, double) #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.fmuladd.f32(float, float, float) #1
+
+; Function Attrs: cold mustprogress noinline nounwind optsize
+declare hidden { double, double } @__divdc3(double noundef, double noundef, double noundef, double noundef) local_unnamed_addr #0
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.copysign.f64(double, double) #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.copysign.f32(float, float) #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.fabs.f64(double) #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.fabs.f32(float) #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.maxnum.f64(double, double) #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.maxnum.f32(float, float) #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.amdgcn.frexp.exp.i32.f64(double) #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.amdgcn.frexp.exp.i32.f32(float) #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.ldexp.f64.i32(double, i32) #1
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.ldexp.f32.i32(float, i32) #1
+
+attributes #0 = { cold mustprogress noinline nounwind optsize "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="gfx942" "target-features"="+16-bit-insts,+atomic-buffer-global-pk-add-f16-insts,+atomic-ds-pk-add-16-insts,+atomic-fadd-rtn-insts,+atomic-flat-pk-add-16-insts,+atomic-global-pk-add-bf16-inst,+ci-insts,+dl-insts,+dot1-insts,+dot10-insts,+dot2-insts,+dot3-insts,+dot4-insts,+dot5-insts,+dot6-insts,+dot7-insts,+dpp,+fp8-conversion-insts,+fp8-insts,+gfx8-insts,+gfx9-insts,+gfx90a-insts,+gfx940-insts,+mai-insts,+s-memrealtime,+s-memtime-inst,+wavefrontsize64,+xf32-insts" }
+attributes #1 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+
+!omp_offload.info = !{!0, !1, !2, !3, !4, !5, !6, !7, !8, !9, !10, !11, !12, !13, !14, !15, !16, !17, !18, !19, !20, !21, !22, !23, !24, !25, !26, !27, !28}
+!llvm.module.flags = !{!29, !30, !31, !32, !33, !34}
+!opencl.ocl.version = !{!35}
+!llvm.ident = !{!36, !37}
+
+!0 = !{i32 1, !"keff", i32 0, i32 7}
+!1 = !{i32 1, !"_ZN6openmc8settings14check_overlapsE", i32 0, i32 14}
+!2 = !{i32 1, !"_ZN6openmc8settings14weight_surviveE", i32 0, i32 28}
+!3 = !{i32 1, !"_ZN6openmc8settings10n_log_binsE", i32 0, i32 21}
+!4 = !{i32 1, !"total_gen", i32 0, i32 11}
+!5 = !{i32 1, !"depletion_scores_present", i32 0, i32 10}
+!6 = !{i32 1, !"gen_per_batch", i32 0, i32 3}
+!7 = !{i32 1, !"dagmc", i32 0, i32 0}
+!8 = !{i32 1, !"_ZN6openmc8settings23create_fission_neutronsE", i32 0, i32 15}
+!9 = !{i32 1, !"_ZN6openmc8settings13weight_cutoffE", i32 0, i32 27}
+!10 = !{i32 1, !"_ZN6openmc8settings19res_scat_energy_maxE", i32 0, i32 24}
+!11 = !{i32 1, !"_ZN6openmc8settings13energy_cutoffE", i32 0, i32 20}
+!12 = !{i32 1, !"_ZN6openmc8settings8run_modeE", i32 0, i32 25}
+!13 = !{i32 1, !"n_particles", i32 0, i32 4}
+!14 = !{i32 1, !"need_depletion_rx", i32 0, i32 9}
+!15 = !{i32 1, !"_ZN6openmc8settings18temperature_methodE", i32 0, i32 26}
+!16 = !{i32 1, !"current_gen", i32 0, i32 6}
+!17 = !{i32 1, !"_ZN6openmc8settings15assume_separateE", i32 0, i32 13}
+!18 = !{i32 1, !"current_batch", i32 0, i32 5}
+!19 = !{i32 1, !"run_CE", i32 0, i32 1}
+!20 = !{i32 1, !"_ZN6openmcL12DEPLETION_RXE", i32 0, i32 12}
+!21 = !{i32 1, !"_ZN6openmc8settings18electron_treatmentE", i32 0, i32 19}
+!22 = !{i32 1, !"_ZN6openmc8settings14urr_ptables_onE", i32 0, i32 17}
+!23 = !{i32 1, !"_ZN6openmc8settings15res_scat_methodE", i32 0, i32 22}
+!24 = !{i32 1, !"max_lost_particles", i32 0, i32 2}
+!25 = !{i32 1, !"_ZN6openmc8settings22rel_max_lost_particlesE", i32 0, i32 18}
+!26 = !{i32 1, !"n_lost_particles", i32 0, i32 8}
+!27 = !{i32 1, !"_ZN6openmc8settings19res_scat_energy_minE", i32 0, i32 23}
+!28 = !{i32 1, !"_ZN6openmc8settings16survival_biasingE", i32 0, i32 16}
+!29 = !{i32 1, !"amdhsa_code_object_version", i32 600}
+!30 = !{i32 1, !"wchar_size", i32 4}
+!31 = !{i32 7, !"openmp", i32 51}
+!32 = !{i32 7, !"openmp-device", i32 51}
+!33 = !{i32 8, !"PIC Level", i32 2}
+!34 = !{i32 1, !"EnableSplitLTOUnit", i32 0}
+!35 = !{i32 2, i32 0}
+!36 = !{!"clang version 21.0.0git (https://github.com/llvm/llvm-project.git da17ced11b1cf44b433cb2b850978df4b6bff279)"}
+!37 = !{!"AMD clang version 18.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-6.3.1 24491 1e0fda770a2079fbd71e4b70974d74f62fd3af10)"}
